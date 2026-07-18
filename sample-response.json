@@ -1,0 +1,2772 @@
+{
+  "metadata": {
+    "dataset": "All_Diets.csv",
+    "row_count": 7806,
+    "diet_types": [
+      "dash",
+      "keto",
+      "mediterranean",
+      "paleo",
+      "vegan"
+    ],
+    "execution_time_ms": 13.1,
+    "generated_at": "2026-07-17T20:10:57.062317+00:00"
+  },
+  "avg_macros": [
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 69.28,
+      "Carbs(g)": 160.54,
+      "Fat(g)": 101.15
+    },
+    {
+      "Diet_type": "keto",
+      "Protein(g)": 101.27,
+      "Carbs(g)": 57.97,
+      "Fat(g)": 153.12
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 101.11,
+      "Carbs(g)": 152.91,
+      "Fat(g)": 101.42
+    },
+    {
+      "Diet_type": "paleo",
+      "Protein(g)": 88.67,
+      "Carbs(g)": 129.55,
+      "Fat(g)": 135.67
+    },
+    {
+      "Diet_type": "vegan",
+      "Protein(g)": 56.16,
+      "Carbs(g)": 254.0,
+      "Fat(g)": 103.3
+    }
+  ],
+  "diet_counts": [
+    {
+      "Diet_type": "mediterranean",
+      "count": 1753
+    },
+    {
+      "Diet_type": "dash",
+      "count": 1745
+    },
+    {
+      "Diet_type": "vegan",
+      "count": 1522
+    },
+    {
+      "Diet_type": "keto",
+      "count": 1512
+    },
+    {
+      "Diet_type": "paleo",
+      "count": 1274
+    }
+  ],
+  "scatter_protein_vs_carbs": [
+    {
+      "Diet_type": "paleo",
+      "Protein(g)": 68.1,
+      "Carbs(g)": 167.94
+    },
+    {
+      "Diet_type": "vegan",
+      "Protein(g)": 222.79,
+      "Carbs(g)": 307.84
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 11.56,
+      "Carbs(g)": 29.91
+    },
+    {
+      "Diet_type": "paleo",
+      "Protein(g)": 27.22,
+      "Carbs(g)": 68.05
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 262.62,
+      "Carbs(g)": 30.43
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 123.28,
+      "Carbs(g)": 69.8
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 132.3,
+      "Carbs(g)": 22.39
+    },
+    {
+      "Diet_type": "paleo",
+      "Protein(g)": 241.71,
+      "Carbs(g)": 22.98
+    },
+    {
+      "Diet_type": "vegan",
+      "Protein(g)": 71.0,
+      "Carbs(g)": 418.03
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 29.81,
+      "Carbs(g)": 83.7
+    },
+    {
+      "Diet_type": "vegan",
+      "Protein(g)": 45.69,
+      "Carbs(g)": 339.78
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 166.86,
+      "Carbs(g)": 291.0
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 0.2,
+      "Carbs(g)": 7.04
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 0.05,
+      "Carbs(g)": 5.45
+    },
+    {
+      "Diet_type": "paleo",
+      "Protein(g)": 39.58,
+      "Carbs(g)": 126.88
+    },
+    {
+      "Diet_type": "vegan",
+      "Protein(g)": 8.48,
+      "Carbs(g)": 114.52
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 226.5,
+      "Carbs(g)": 25.46
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 71.5,
+      "Carbs(g)": 244.12
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 60.36,
+      "Carbs(g)": 137.21
+    },
+    {
+      "Diet_type": "paleo",
+      "Protein(g)": 213.64,
+      "Carbs(g)": 480.19
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 7.65,
+      "Carbs(g)": 76.77
+    },
+    {
+      "Diet_type": "vegan",
+      "Protein(g)": 31.1,
+      "Carbs(g)": 207.84
+    },
+    {
+      "Diet_type": "paleo",
+      "Protein(g)": 4.65,
+      "Carbs(g)": 114.17
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 0.21,
+      "Carbs(g)": 33.93
+    },
+    {
+      "Diet_type": "vegan",
+      "Protein(g)": 1.87,
+      "Carbs(g)": 21.6
+    },
+    {
+      "Diet_type": "paleo",
+      "Protein(g)": 37.98,
+      "Carbs(g)": 145.35
+    },
+    {
+      "Diet_type": "paleo",
+      "Protein(g)": 96.21,
+      "Carbs(g)": 128.43
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 85.6,
+      "Carbs(g)": 204.82
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 0.09,
+      "Carbs(g)": 7.44
+    },
+    {
+      "Diet_type": "keto",
+      "Protein(g)": 139.68,
+      "Carbs(g)": 44.42
+    },
+    {
+      "Diet_type": "paleo",
+      "Protein(g)": 45.19,
+      "Carbs(g)": 255.14
+    },
+    {
+      "Diet_type": "keto",
+      "Protein(g)": 102.57,
+      "Carbs(g)": 17.28
+    },
+    {
+      "Diet_type": "keto",
+      "Protein(g)": 76.43,
+      "Carbs(g)": 155.74
+    },
+    {
+      "Diet_type": "keto",
+      "Protein(g)": 51.28,
+      "Carbs(g)": 6.13
+    },
+    {
+      "Diet_type": "vegan",
+      "Protein(g)": 54.07,
+      "Carbs(g)": 584.1
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 5.47,
+      "Carbs(g)": 19.42
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 168.43,
+      "Carbs(g)": 101.65
+    },
+    {
+      "Diet_type": "keto",
+      "Protein(g)": 21.07,
+      "Carbs(g)": 60.61
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 40.07,
+      "Carbs(g)": 137.12
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 37.03,
+      "Carbs(g)": 425.78
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 169.44,
+      "Carbs(g)": 44.83
+    },
+    {
+      "Diet_type": "vegan",
+      "Protein(g)": 24.67,
+      "Carbs(g)": 231.46
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 28.26,
+      "Carbs(g)": 83.18
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 185.75,
+      "Carbs(g)": 32.21
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 0.0,
+      "Carbs(g)": 4.87
+    },
+    {
+      "Diet_type": "paleo",
+      "Protein(g)": 88.19,
+      "Carbs(g)": 289.27
+    },
+    {
+      "Diet_type": "keto",
+      "Protein(g)": 15.09,
+      "Carbs(g)": 32.01
+    },
+    {
+      "Diet_type": "paleo",
+      "Protein(g)": 111.33,
+      "Carbs(g)": 1.41
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 276.85,
+      "Carbs(g)": 23.72
+    },
+    {
+      "Diet_type": "keto",
+      "Protein(g)": 32.67,
+      "Carbs(g)": 58.26
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 83.82,
+      "Carbs(g)": 325.59
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 1.63,
+      "Carbs(g)": 31.42
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 164.46,
+      "Carbs(g)": 115.51
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 7.59,
+      "Carbs(g)": 73.68
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 453.98,
+      "Carbs(g)": 311.78
+    },
+    {
+      "Diet_type": "paleo",
+      "Protein(g)": 85.78,
+      "Carbs(g)": 200.52
+    },
+    {
+      "Diet_type": "keto",
+      "Protein(g)": 48.45,
+      "Carbs(g)": 52.66
+    },
+    {
+      "Diet_type": "keto",
+      "Protein(g)": 34.05,
+      "Carbs(g)": 25.78
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 222.04,
+      "Carbs(g)": 249.55
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 51.98,
+      "Carbs(g)": 75.46
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 30.37,
+      "Carbs(g)": 249.23
+    },
+    {
+      "Diet_type": "keto",
+      "Protein(g)": 21.55,
+      "Carbs(g)": 65.36
+    },
+    {
+      "Diet_type": "vegan",
+      "Protein(g)": 11.45,
+      "Carbs(g)": 50.78
+    },
+    {
+      "Diet_type": "vegan",
+      "Protein(g)": 11.24,
+      "Carbs(g)": 94.37
+    },
+    {
+      "Diet_type": "keto",
+      "Protein(g)": 129.91,
+      "Carbs(g)": 60.36
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 17.98,
+      "Carbs(g)": 10.07
+    },
+    {
+      "Diet_type": "keto",
+      "Protein(g)": 225.51,
+      "Carbs(g)": 115.2
+    },
+    {
+      "Diet_type": "vegan",
+      "Protein(g)": 61.88,
+      "Carbs(g)": 199.46
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 36.25,
+      "Carbs(g)": 16.92
+    },
+    {
+      "Diet_type": "vegan",
+      "Protein(g)": 92.0,
+      "Carbs(g)": 316.83
+    },
+    {
+      "Diet_type": "keto",
+      "Protein(g)": 24.61,
+      "Carbs(g)": 45.84
+    },
+    {
+      "Diet_type": "keto",
+      "Protein(g)": 140.0,
+      "Carbs(g)": 105.13
+    },
+    {
+      "Diet_type": "vegan",
+      "Protein(g)": 34.58,
+      "Carbs(g)": 204.76
+    },
+    {
+      "Diet_type": "keto",
+      "Protein(g)": 12.08,
+      "Carbs(g)": 23.42
+    },
+    {
+      "Diet_type": "paleo",
+      "Protein(g)": 58.26,
+      "Carbs(g)": 120.44
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 80.33,
+      "Carbs(g)": 196.54
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 163.98,
+      "Carbs(g)": 2450.17
+    },
+    {
+      "Diet_type": "vegan",
+      "Protein(g)": 24.74,
+      "Carbs(g)": 156.71
+    },
+    {
+      "Diet_type": "keto",
+      "Protein(g)": 93.43,
+      "Carbs(g)": 382.29
+    },
+    {
+      "Diet_type": "keto",
+      "Protein(g)": 83.78,
+      "Carbs(g)": 44.26
+    },
+    {
+      "Diet_type": "paleo",
+      "Protein(g)": 39.32,
+      "Carbs(g)": 88.7
+    },
+    {
+      "Diet_type": "vegan",
+      "Protein(g)": 23.03,
+      "Carbs(g)": 167.07
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 48.31,
+      "Carbs(g)": 380.02
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 31.57,
+      "Carbs(g)": 47.15
+    },
+    {
+      "Diet_type": "vegan",
+      "Protein(g)": 32.24,
+      "Carbs(g)": 133.05
+    },
+    {
+      "Diet_type": "paleo",
+      "Protein(g)": 46.99,
+      "Carbs(g)": 331.12
+    },
+    {
+      "Diet_type": "paleo",
+      "Protein(g)": 46.3,
+      "Carbs(g)": 138.96
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 48.24,
+      "Carbs(g)": 24.79
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 132.14,
+      "Carbs(g)": 453.36
+    },
+    {
+      "Diet_type": "vegan",
+      "Protein(g)": 76.78,
+      "Carbs(g)": 159.24
+    },
+    {
+      "Diet_type": "keto",
+      "Protein(g)": 40.48,
+      "Carbs(g)": 32.67
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 140.37,
+      "Carbs(g)": 3.65
+    },
+    {
+      "Diet_type": "paleo",
+      "Protein(g)": 115.08,
+      "Carbs(g)": 137.47
+    },
+    {
+      "Diet_type": "vegan",
+      "Protein(g)": 47.23,
+      "Carbs(g)": 183.97
+    },
+    {
+      "Diet_type": "vegan",
+      "Protein(g)": 23.85,
+      "Carbs(g)": 148.88
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 76.1,
+      "Carbs(g)": 181.73
+    },
+    {
+      "Diet_type": "vegan",
+      "Protein(g)": 29.04,
+      "Carbs(g)": 178.5
+    },
+    {
+      "Diet_type": "vegan",
+      "Protein(g)": 47.23,
+      "Carbs(g)": 162.33
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 75.66,
+      "Carbs(g)": 6.74
+    },
+    {
+      "Diet_type": "keto",
+      "Protein(g)": 243.48,
+      "Carbs(g)": 67.79
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 126.18,
+      "Carbs(g)": 271.03
+    },
+    {
+      "Diet_type": "keto",
+      "Protein(g)": 89.63,
+      "Carbs(g)": 42.47
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 340.89,
+      "Carbs(g)": 1540.91
+    },
+    {
+      "Diet_type": "vegan",
+      "Protein(g)": 72.39,
+      "Carbs(g)": 391.05
+    },
+    {
+      "Diet_type": "vegan",
+      "Protein(g)": 22.13,
+      "Carbs(g)": 75.04
+    },
+    {
+      "Diet_type": "vegan",
+      "Protein(g)": 114.38,
+      "Carbs(g)": 356.37
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 11.54,
+      "Carbs(g)": 161.96
+    },
+    {
+      "Diet_type": "vegan",
+      "Protein(g)": 64.61,
+      "Carbs(g)": 290.67
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 2.86,
+      "Carbs(g)": 20.04
+    },
+    {
+      "Diet_type": "vegan",
+      "Protein(g)": 3.69,
+      "Carbs(g)": 7.89
+    },
+    {
+      "Diet_type": "paleo",
+      "Protein(g)": 212.2,
+      "Carbs(g)": 126.47
+    },
+    {
+      "Diet_type": "paleo",
+      "Protein(g)": 17.07,
+      "Carbs(g)": 23.74
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 2.37,
+      "Carbs(g)": 32.94
+    },
+    {
+      "Diet_type": "vegan",
+      "Protein(g)": 15.05,
+      "Carbs(g)": 51.05
+    },
+    {
+      "Diet_type": "keto",
+      "Protein(g)": 375.92,
+      "Carbs(g)": 8.09
+    },
+    {
+      "Diet_type": "vegan",
+      "Protein(g)": 36.74,
+      "Carbs(g)": 100.91
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 169.85,
+      "Carbs(g)": 155.51
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 24.63,
+      "Carbs(g)": 55.06
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 81.74,
+      "Carbs(g)": 160.38
+    },
+    {
+      "Diet_type": "paleo",
+      "Protein(g)": 94.63,
+      "Carbs(g)": 21.46
+    },
+    {
+      "Diet_type": "paleo",
+      "Protein(g)": 137.17,
+      "Carbs(g)": 20.55
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 264.91,
+      "Carbs(g)": 358.69
+    },
+    {
+      "Diet_type": "vegan",
+      "Protein(g)": 136.76,
+      "Carbs(g)": 434.28
+    },
+    {
+      "Diet_type": "vegan",
+      "Protein(g)": 37.1,
+      "Carbs(g)": 298.65
+    },
+    {
+      "Diet_type": "keto",
+      "Protein(g)": 159.45,
+      "Carbs(g)": 35.97
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 0.03,
+      "Carbs(g)": 9.6
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 16.45,
+      "Carbs(g)": 80.78
+    },
+    {
+      "Diet_type": "vegan",
+      "Protein(g)": 10.9,
+      "Carbs(g)": 28.5
+    },
+    {
+      "Diet_type": "paleo",
+      "Protein(g)": 26.37,
+      "Carbs(g)": 221.01
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 179.41,
+      "Carbs(g)": 42.81
+    },
+    {
+      "Diet_type": "keto",
+      "Protein(g)": 98.45,
+      "Carbs(g)": 55.02
+    },
+    {
+      "Diet_type": "vegan",
+      "Protein(g)": 127.15,
+      "Carbs(g)": 164.38
+    },
+    {
+      "Diet_type": "vegan",
+      "Protein(g)": 43.54,
+      "Carbs(g)": 417.73
+    },
+    {
+      "Diet_type": "keto",
+      "Protein(g)": 97.43,
+      "Carbs(g)": 199.83
+    },
+    {
+      "Diet_type": "paleo",
+      "Protein(g)": 97.93,
+      "Carbs(g)": 107.81
+    },
+    {
+      "Diet_type": "keto",
+      "Protein(g)": 35.62,
+      "Carbs(g)": 90.72
+    },
+    {
+      "Diet_type": "vegan",
+      "Protein(g)": 187.25,
+      "Carbs(g)": 102.14
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 110.38,
+      "Carbs(g)": 202.45
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 68.34,
+      "Carbs(g)": 442.95
+    },
+    {
+      "Diet_type": "vegan",
+      "Protein(g)": 106.42,
+      "Carbs(g)": 116.25
+    },
+    {
+      "Diet_type": "keto",
+      "Protein(g)": 65.89,
+      "Carbs(g)": 89.94
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 92.93,
+      "Carbs(g)": 346.28
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 8.77,
+      "Carbs(g)": 25.98
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 2.11,
+      "Carbs(g)": 54.23
+    },
+    {
+      "Diet_type": "vegan",
+      "Protein(g)": 46.49,
+      "Carbs(g)": 138.98
+    },
+    {
+      "Diet_type": "vegan",
+      "Protein(g)": 14.9,
+      "Carbs(g)": 111.97
+    },
+    {
+      "Diet_type": "vegan",
+      "Protein(g)": 39.8,
+      "Carbs(g)": 229.88
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 99.66,
+      "Carbs(g)": 116.78
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 0.13,
+      "Carbs(g)": 27.64
+    },
+    {
+      "Diet_type": "keto",
+      "Protein(g)": 21.91,
+      "Carbs(g)": 3.42
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 30.0,
+      "Carbs(g)": 119.71
+    },
+    {
+      "Diet_type": "vegan",
+      "Protein(g)": 53.36,
+      "Carbs(g)": 194.74
+    },
+    {
+      "Diet_type": "paleo",
+      "Protein(g)": 55.21,
+      "Carbs(g)": 41.5
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 32.18,
+      "Carbs(g)": 21.15
+    },
+    {
+      "Diet_type": "keto",
+      "Protein(g)": 306.99,
+      "Carbs(g)": 25.95
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 80.69,
+      "Carbs(g)": 922.26
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 64.76,
+      "Carbs(g)": 864.34
+    },
+    {
+      "Diet_type": "paleo",
+      "Protein(g)": 14.23,
+      "Carbs(g)": 100.98
+    },
+    {
+      "Diet_type": "paleo",
+      "Protein(g)": 38.18,
+      "Carbs(g)": 20.35
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 2.28,
+      "Carbs(g)": 11.32
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 19.37,
+      "Carbs(g)": 110.72
+    },
+    {
+      "Diet_type": "vegan",
+      "Protein(g)": 18.6,
+      "Carbs(g)": 248.87
+    },
+    {
+      "Diet_type": "keto",
+      "Protein(g)": 118.81,
+      "Carbs(g)": 13.06
+    },
+    {
+      "Diet_type": "vegan",
+      "Protein(g)": 97.48,
+      "Carbs(g)": 229.27
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 57.02,
+      "Carbs(g)": 141.24
+    },
+    {
+      "Diet_type": "vegan",
+      "Protein(g)": 90.34,
+      "Carbs(g)": 307.15
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 93.61,
+      "Carbs(g)": 51.65
+    },
+    {
+      "Diet_type": "keto",
+      "Protein(g)": 131.09,
+      "Carbs(g)": 14.73
+    },
+    {
+      "Diet_type": "vegan",
+      "Protein(g)": 34.44,
+      "Carbs(g)": 181.0
+    },
+    {
+      "Diet_type": "paleo",
+      "Protein(g)": 77.32,
+      "Carbs(g)": 1801.16
+    },
+    {
+      "Diet_type": "vegan",
+      "Protein(g)": 10.5,
+      "Carbs(g)": 71.22
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 0.13,
+      "Carbs(g)": 16.28
+    },
+    {
+      "Diet_type": "vegan",
+      "Protein(g)": 7.27,
+      "Carbs(g)": 143.81
+    },
+    {
+      "Diet_type": "vegan",
+      "Protein(g)": 15.23,
+      "Carbs(g)": 304.34
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 223.44,
+      "Carbs(g)": 468.96
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 9.07,
+      "Carbs(g)": 34.05
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 25.26,
+      "Carbs(g)": 147.27
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 240.19,
+      "Carbs(g)": 255.96
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 8.25,
+      "Carbs(g)": 13.59
+    },
+    {
+      "Diet_type": "paleo",
+      "Protein(g)": 97.49,
+      "Carbs(g)": 280.14
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 76.64,
+      "Carbs(g)": 429.13
+    },
+    {
+      "Diet_type": "vegan",
+      "Protein(g)": 13.8,
+      "Carbs(g)": 38.34
+    },
+    {
+      "Diet_type": "paleo",
+      "Protein(g)": 22.75,
+      "Carbs(g)": 124.99
+    },
+    {
+      "Diet_type": "paleo",
+      "Protein(g)": 145.17,
+      "Carbs(g)": 73.29
+    },
+    {
+      "Diet_type": "vegan",
+      "Protein(g)": 67.06,
+      "Carbs(g)": 209.97
+    },
+    {
+      "Diet_type": "vegan",
+      "Protein(g)": 46.43,
+      "Carbs(g)": 174.03
+    },
+    {
+      "Diet_type": "keto",
+      "Protein(g)": 148.81,
+      "Carbs(g)": 15.9
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 44.57,
+      "Carbs(g)": 175.14
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 33.04,
+      "Carbs(g)": 183.28
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 9.3,
+      "Carbs(g)": 18.75
+    },
+    {
+      "Diet_type": "keto",
+      "Protein(g)": 104.29,
+      "Carbs(g)": 77.81
+    },
+    {
+      "Diet_type": "keto",
+      "Protein(g)": 220.23,
+      "Carbs(g)": 57.19
+    },
+    {
+      "Diet_type": "keto",
+      "Protein(g)": 28.24,
+      "Carbs(g)": 2.5
+    },
+    {
+      "Diet_type": "keto",
+      "Protein(g)": 49.11,
+      "Carbs(g)": 11.62
+    },
+    {
+      "Diet_type": "keto",
+      "Protein(g)": 242.23,
+      "Carbs(g)": 52.28
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 0.99,
+      "Carbs(g)": 61.56
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 13.35,
+      "Carbs(g)": 13.37
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 96.39,
+      "Carbs(g)": 126.2
+    },
+    {
+      "Diet_type": "paleo",
+      "Protein(g)": 53.41,
+      "Carbs(g)": 214.31
+    },
+    {
+      "Diet_type": "paleo",
+      "Protein(g)": 123.47,
+      "Carbs(g)": 75.65
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 4.25,
+      "Carbs(g)": 29.14
+    },
+    {
+      "Diet_type": "keto",
+      "Protein(g)": 154.43,
+      "Carbs(g)": 60.76
+    },
+    {
+      "Diet_type": "keto",
+      "Protein(g)": 217.65,
+      "Carbs(g)": 84.99
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 49.03,
+      "Carbs(g)": 116.12
+    },
+    {
+      "Diet_type": "keto",
+      "Protein(g)": 18.06,
+      "Carbs(g)": 40.33
+    },
+    {
+      "Diet_type": "keto",
+      "Protein(g)": 4.89,
+      "Carbs(g)": 17.01
+    },
+    {
+      "Diet_type": "paleo",
+      "Protein(g)": 45.91,
+      "Carbs(g)": 155.32
+    },
+    {
+      "Diet_type": "keto",
+      "Protein(g)": 139.96,
+      "Carbs(g)": 33.93
+    },
+    {
+      "Diet_type": "keto",
+      "Protein(g)": 227.31,
+      "Carbs(g)": 27.27
+    },
+    {
+      "Diet_type": "vegan",
+      "Protein(g)": 10.33,
+      "Carbs(g)": 24.49
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 115.26,
+      "Carbs(g)": 679.82
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 169.61,
+      "Carbs(g)": 27.33
+    },
+    {
+      "Diet_type": "vegan",
+      "Protein(g)": 319.54,
+      "Carbs(g)": 1159.0
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 126.39,
+      "Carbs(g)": 137.7
+    },
+    {
+      "Diet_type": "keto",
+      "Protein(g)": 312.74,
+      "Carbs(g)": 44.29
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 272.1,
+      "Carbs(g)": 60.5
+    },
+    {
+      "Diet_type": "keto",
+      "Protein(g)": 7.93,
+      "Carbs(g)": 7.57
+    },
+    {
+      "Diet_type": "vegan",
+      "Protein(g)": 198.89,
+      "Carbs(g)": 851.59
+    },
+    {
+      "Diet_type": "paleo",
+      "Protein(g)": 170.68,
+      "Carbs(g)": 144.12
+    },
+    {
+      "Diet_type": "keto",
+      "Protein(g)": 90.79,
+      "Carbs(g)": 24.77
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 55.96,
+      "Carbs(g)": 176.21
+    },
+    {
+      "Diet_type": "vegan",
+      "Protein(g)": 18.46,
+      "Carbs(g)": 110.8
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 139.74,
+      "Carbs(g)": 34.63
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 129.12,
+      "Carbs(g)": 543.33
+    },
+    {
+      "Diet_type": "paleo",
+      "Protein(g)": 21.95,
+      "Carbs(g)": 105.25
+    },
+    {
+      "Diet_type": "paleo",
+      "Protein(g)": 32.32,
+      "Carbs(g)": 157.39
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 15.98,
+      "Carbs(g)": 54.71
+    },
+    {
+      "Diet_type": "paleo",
+      "Protein(g)": 91.88,
+      "Carbs(g)": 3.34
+    },
+    {
+      "Diet_type": "keto",
+      "Protein(g)": 101.73,
+      "Carbs(g)": 17.72
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 189.69,
+      "Carbs(g)": 441.8
+    },
+    {
+      "Diet_type": "vegan",
+      "Protein(g)": 42.64,
+      "Carbs(g)": 336.11
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 122.07,
+      "Carbs(g)": 21.35
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 155.77,
+      "Carbs(g)": 210.05
+    },
+    {
+      "Diet_type": "vegan",
+      "Protein(g)": 48.54,
+      "Carbs(g)": 390.74
+    },
+    {
+      "Diet_type": "vegan",
+      "Protein(g)": 28.19,
+      "Carbs(g)": 112.52
+    },
+    {
+      "Diet_type": "keto",
+      "Protein(g)": 1.81,
+      "Carbs(g)": 28.3
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 73.25,
+      "Carbs(g)": 19.56
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 247.13,
+      "Carbs(g)": 394.06
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 230.09,
+      "Carbs(g)": 69.01
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 63.59,
+      "Carbs(g)": 173.98
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 99.1,
+      "Carbs(g)": 104.32
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 32.54,
+      "Carbs(g)": 85.66
+    },
+    {
+      "Diet_type": "paleo",
+      "Protein(g)": 197.23,
+      "Carbs(g)": 51.76
+    },
+    {
+      "Diet_type": "vegan",
+      "Protein(g)": 6.67,
+      "Carbs(g)": 61.95
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 1.15,
+      "Carbs(g)": 29.18
+    },
+    {
+      "Diet_type": "keto",
+      "Protein(g)": 3.3,
+      "Carbs(g)": 13.24
+    },
+    {
+      "Diet_type": "vegan",
+      "Protein(g)": 100.27,
+      "Carbs(g)": 167.06
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 0.02,
+      "Carbs(g)": 2.66
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 28.52,
+      "Carbs(g)": 114.27
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 57.41,
+      "Carbs(g)": 114.18
+    },
+    {
+      "Diet_type": "keto",
+      "Protein(g)": 137.39,
+      "Carbs(g)": 14.28
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 165.23,
+      "Carbs(g)": 29.57
+    },
+    {
+      "Diet_type": "keto",
+      "Protein(g)": 118.08,
+      "Carbs(g)": 6.55
+    },
+    {
+      "Diet_type": "keto",
+      "Protein(g)": 198.47,
+      "Carbs(g)": 49.07
+    },
+    {
+      "Diet_type": "keto",
+      "Protein(g)": 325.11,
+      "Carbs(g)": 16.4
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 32.81,
+      "Carbs(g)": 191.19
+    },
+    {
+      "Diet_type": "vegan",
+      "Protein(g)": 30.26,
+      "Carbs(g)": 177.35
+    },
+    {
+      "Diet_type": "paleo",
+      "Protein(g)": 244.29,
+      "Carbs(g)": 69.44
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 11.84,
+      "Carbs(g)": 206.46
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 1239.47,
+      "Carbs(g)": 22.4
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 6.01,
+      "Carbs(g)": 46.96
+    },
+    {
+      "Diet_type": "paleo",
+      "Protein(g)": 18.08,
+      "Carbs(g)": 213.75
+    },
+    {
+      "Diet_type": "vegan",
+      "Protein(g)": 73.91,
+      "Carbs(g)": 236.99
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 135.14,
+      "Carbs(g)": 57.15
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 108.86,
+      "Carbs(g)": 29.66
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 115.92,
+      "Carbs(g)": 218.04
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 219.7,
+      "Carbs(g)": 16.96
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 26.9,
+      "Carbs(g)": 43.45
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 129.12,
+      "Carbs(g)": 353.11
+    },
+    {
+      "Diet_type": "vegan",
+      "Protein(g)": 52.57,
+      "Carbs(g)": 234.71
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 2.6,
+      "Carbs(g)": 99.34
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 6.64,
+      "Carbs(g)": 43.62
+    },
+    {
+      "Diet_type": "paleo",
+      "Protein(g)": 117.89,
+      "Carbs(g)": 113.86
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 18.65,
+      "Carbs(g)": 286.51
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 113.42,
+      "Carbs(g)": 328.21
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 50.63,
+      "Carbs(g)": 938.69
+    },
+    {
+      "Diet_type": "keto",
+      "Protein(g)": 37.37,
+      "Carbs(g)": 10.81
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 31.15,
+      "Carbs(g)": 430.47
+    },
+    {
+      "Diet_type": "keto",
+      "Protein(g)": 216.17,
+      "Carbs(g)": 7.21
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 85.94,
+      "Carbs(g)": 34.23
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 0.16,
+      "Carbs(g)": 2.19
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 78.78,
+      "Carbs(g)": 210.05
+    },
+    {
+      "Diet_type": "keto",
+      "Protein(g)": 83.53,
+      "Carbs(g)": 111.03
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 99.16,
+      "Carbs(g)": 171.5
+    },
+    {
+      "Diet_type": "keto",
+      "Protein(g)": 141.3,
+      "Carbs(g)": 117.92
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 20.33,
+      "Carbs(g)": 164.14
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 0.39,
+      "Carbs(g)": 68.49
+    },
+    {
+      "Diet_type": "paleo",
+      "Protein(g)": 33.65,
+      "Carbs(g)": 272.71
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 133.53,
+      "Carbs(g)": 164.18
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 47.6,
+      "Carbs(g)": 34.91
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 40.9,
+      "Carbs(g)": 238.4
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 16.3,
+      "Carbs(g)": 83.63
+    },
+    {
+      "Diet_type": "vegan",
+      "Protein(g)": 34.66,
+      "Carbs(g)": 41.97
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 65.37,
+      "Carbs(g)": 787.82
+    },
+    {
+      "Diet_type": "paleo",
+      "Protein(g)": 94.1,
+      "Carbs(g)": 15.58
+    },
+    {
+      "Diet_type": "keto",
+      "Protein(g)": 49.48,
+      "Carbs(g)": 46.71
+    },
+    {
+      "Diet_type": "paleo",
+      "Protein(g)": 56.95,
+      "Carbs(g)": 69.25
+    },
+    {
+      "Diet_type": "keto",
+      "Protein(g)": 52.28,
+      "Carbs(g)": 29.91
+    },
+    {
+      "Diet_type": "vegan",
+      "Protein(g)": 14.5,
+      "Carbs(g)": 6.77
+    },
+    {
+      "Diet_type": "keto",
+      "Protein(g)": 75.52,
+      "Carbs(g)": 29.82
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 0.23,
+      "Carbs(g)": 4.02
+    },
+    {
+      "Diet_type": "vegan",
+      "Protein(g)": 113.8,
+      "Carbs(g)": 391.09
+    },
+    {
+      "Diet_type": "keto",
+      "Protein(g)": 9.72,
+      "Carbs(g)": 12.63
+    },
+    {
+      "Diet_type": "keto",
+      "Protein(g)": 15.17,
+      "Carbs(g)": 7.84
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 45.57,
+      "Carbs(g)": 66.57
+    },
+    {
+      "Diet_type": "vegan",
+      "Protein(g)": 421.72,
+      "Carbs(g)": 1636.67
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 4.05,
+      "Carbs(g)": 28.59
+    },
+    {
+      "Diet_type": "keto",
+      "Protein(g)": 90.86,
+      "Carbs(g)": 130.47
+    },
+    {
+      "Diet_type": "keto",
+      "Protein(g)": 68.24,
+      "Carbs(g)": 19.76
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 98.55,
+      "Carbs(g)": 134.91
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 5.16,
+      "Carbs(g)": 63.53
+    },
+    {
+      "Diet_type": "keto",
+      "Protein(g)": 149.85,
+      "Carbs(g)": 46.0
+    },
+    {
+      "Diet_type": "keto",
+      "Protein(g)": 220.66,
+      "Carbs(g)": 106.85
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 141.98,
+      "Carbs(g)": 123.18
+    },
+    {
+      "Diet_type": "vegan",
+      "Protein(g)": 227.6,
+      "Carbs(g)": 502.31
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 43.84,
+      "Carbs(g)": 31.94
+    },
+    {
+      "Diet_type": "keto",
+      "Protein(g)": 25.66,
+      "Carbs(g)": 8.52
+    },
+    {
+      "Diet_type": "paleo",
+      "Protein(g)": 15.67,
+      "Carbs(g)": 41.91
+    },
+    {
+      "Diet_type": "paleo",
+      "Protein(g)": 25.33,
+      "Carbs(g)": 57.48
+    },
+    {
+      "Diet_type": "vegan",
+      "Protein(g)": 85.28,
+      "Carbs(g)": 44.39
+    },
+    {
+      "Diet_type": "paleo",
+      "Protein(g)": 99.59,
+      "Carbs(g)": 336.0
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 44.73,
+      "Carbs(g)": 294.32
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 3.19,
+      "Carbs(g)": 17.14
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 219.19,
+      "Carbs(g)": 653.27
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 20.33,
+      "Carbs(g)": 90.1
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 422.8,
+      "Carbs(g)": 112.22
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 105.38,
+      "Carbs(g)": 276.44
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 14.68,
+      "Carbs(g)": 223.12
+    },
+    {
+      "Diet_type": "vegan",
+      "Protein(g)": 65.49,
+      "Carbs(g)": 340.58
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 54.18,
+      "Carbs(g)": 114.77
+    },
+    {
+      "Diet_type": "vegan",
+      "Protein(g)": 8.37,
+      "Carbs(g)": 34.76
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 33.27,
+      "Carbs(g)": 276.96
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 50.95,
+      "Carbs(g)": 337.64
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 70.61,
+      "Carbs(g)": 568.83
+    },
+    {
+      "Diet_type": "vegan",
+      "Protein(g)": 87.94,
+      "Carbs(g)": 350.33
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 178.89,
+      "Carbs(g)": 83.44
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 34.63,
+      "Carbs(g)": 81.23
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 14.67,
+      "Carbs(g)": 55.62
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 48.11,
+      "Carbs(g)": 194.24
+    },
+    {
+      "Diet_type": "vegan",
+      "Protein(g)": 49.48,
+      "Carbs(g)": 66.44
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 0.51,
+      "Carbs(g)": 13.62
+    },
+    {
+      "Diet_type": "keto",
+      "Protein(g)": 104.27,
+      "Carbs(g)": 73.24
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 34.82,
+      "Carbs(g)": 237.19
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 105.82,
+      "Carbs(g)": 81.28
+    },
+    {
+      "Diet_type": "paleo",
+      "Protein(g)": 29.64,
+      "Carbs(g)": 509.13
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 13.05,
+      "Carbs(g)": 70.28
+    },
+    {
+      "Diet_type": "keto",
+      "Protein(g)": 163.47,
+      "Carbs(g)": 4.71
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 218.73,
+      "Carbs(g)": 156.01
+    },
+    {
+      "Diet_type": "vegan",
+      "Protein(g)": 69.77,
+      "Carbs(g)": 135.28
+    },
+    {
+      "Diet_type": "paleo",
+      "Protein(g)": 39.34,
+      "Carbs(g)": 38.27
+    },
+    {
+      "Diet_type": "vegan",
+      "Protein(g)": 59.12,
+      "Carbs(g)": 224.37
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 164.19,
+      "Carbs(g)": 40.57
+    },
+    {
+      "Diet_type": "paleo",
+      "Protein(g)": 13.91,
+      "Carbs(g)": 131.15
+    },
+    {
+      "Diet_type": "vegan",
+      "Protein(g)": 39.49,
+      "Carbs(g)": 126.57
+    },
+    {
+      "Diet_type": "paleo",
+      "Protein(g)": 85.79,
+      "Carbs(g)": 12.51
+    },
+    {
+      "Diet_type": "vegan",
+      "Protein(g)": 5.51,
+      "Carbs(g)": 70.81
+    },
+    {
+      "Diet_type": "keto",
+      "Protein(g)": 54.66,
+      "Carbs(g)": 39.12
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 20.78,
+      "Carbs(g)": 69.35
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 398.42,
+      "Carbs(g)": 444.69
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 76.73,
+      "Carbs(g)": 317.64
+    },
+    {
+      "Diet_type": "paleo",
+      "Protein(g)": 7.68,
+      "Carbs(g)": 89.2
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 12.17,
+      "Carbs(g)": 32.61
+    },
+    {
+      "Diet_type": "paleo",
+      "Protein(g)": 17.38,
+      "Carbs(g)": 56.94
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 91.02,
+      "Carbs(g)": 277.49
+    },
+    {
+      "Diet_type": "keto",
+      "Protein(g)": 274.34,
+      "Carbs(g)": 196.1
+    },
+    {
+      "Diet_type": "vegan",
+      "Protein(g)": 32.92,
+      "Carbs(g)": 349.55
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 83.46,
+      "Carbs(g)": 103.01
+    },
+    {
+      "Diet_type": "vegan",
+      "Protein(g)": 99.72,
+      "Carbs(g)": 335.36
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 186.16,
+      "Carbs(g)": 105.55
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 148.83,
+      "Carbs(g)": 74.87
+    },
+    {
+      "Diet_type": "paleo",
+      "Protein(g)": 13.93,
+      "Carbs(g)": 33.12
+    },
+    {
+      "Diet_type": "vegan",
+      "Protein(g)": 38.71,
+      "Carbs(g)": 545.64
+    },
+    {
+      "Diet_type": "keto",
+      "Protein(g)": 69.75,
+      "Carbs(g)": 79.3
+    },
+    {
+      "Diet_type": "keto",
+      "Protein(g)": 240.9,
+      "Carbs(g)": 60.16
+    },
+    {
+      "Diet_type": "paleo",
+      "Protein(g)": 32.24,
+      "Carbs(g)": 221.1
+    },
+    {
+      "Diet_type": "paleo",
+      "Protein(g)": 29.89,
+      "Carbs(g)": 99.19
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 284.78,
+      "Carbs(g)": 69.32
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 308.94,
+      "Carbs(g)": 55.85
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 4.45,
+      "Carbs(g)": 22.53
+    },
+    {
+      "Diet_type": "keto",
+      "Protein(g)": 18.98,
+      "Carbs(g)": 51.67
+    },
+    {
+      "Diet_type": "paleo",
+      "Protein(g)": 274.38,
+      "Carbs(g)": 240.62
+    },
+    {
+      "Diet_type": "paleo",
+      "Protein(g)": 17.31,
+      "Carbs(g)": 63.01
+    },
+    {
+      "Diet_type": "vegan",
+      "Protein(g)": 27.75,
+      "Carbs(g)": 90.49
+    },
+    {
+      "Diet_type": "keto",
+      "Protein(g)": 21.78,
+      "Carbs(g)": 3.68
+    },
+    {
+      "Diet_type": "keto",
+      "Protein(g)": 121.29,
+      "Carbs(g)": 8.74
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 105.38,
+      "Carbs(g)": 132.84
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 99.25,
+      "Carbs(g)": 72.94
+    },
+    {
+      "Diet_type": "paleo",
+      "Protein(g)": 189.22,
+      "Carbs(g)": 139.79
+    },
+    {
+      "Diet_type": "keto",
+      "Protein(g)": 102.64,
+      "Carbs(g)": 36.71
+    },
+    {
+      "Diet_type": "vegan",
+      "Protein(g)": 40.59,
+      "Carbs(g)": 314.63
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 160.68,
+      "Carbs(g)": 40.78
+    },
+    {
+      "Diet_type": "keto",
+      "Protein(g)": 413.71,
+      "Carbs(g)": 62.77
+    },
+    {
+      "Diet_type": "vegan",
+      "Protein(g)": 32.27,
+      "Carbs(g)": 312.66
+    },
+    {
+      "Diet_type": "paleo",
+      "Protein(g)": 26.18,
+      "Carbs(g)": 74.5
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 186.2,
+      "Carbs(g)": 214.33
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 68.59,
+      "Carbs(g)": 38.41
+    },
+    {
+      "Diet_type": "keto",
+      "Protein(g)": 0.0,
+      "Carbs(g)": 12.0
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 32.85,
+      "Carbs(g)": 132.06
+    },
+    {
+      "Diet_type": "paleo",
+      "Protein(g)": 22.61,
+      "Carbs(g)": 68.6
+    },
+    {
+      "Diet_type": "paleo",
+      "Protein(g)": 69.91,
+      "Carbs(g)": 125.55
+    },
+    {
+      "Diet_type": "vegan",
+      "Protein(g)": 123.25,
+      "Carbs(g)": 624.69
+    },
+    {
+      "Diet_type": "keto",
+      "Protein(g)": 60.86,
+      "Carbs(g)": 237.65
+    },
+    {
+      "Diet_type": "paleo",
+      "Protein(g)": 33.0,
+      "Carbs(g)": 201.88
+    },
+    {
+      "Diet_type": "keto",
+      "Protein(g)": 77.35,
+      "Carbs(g)": 14.08
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 34.38,
+      "Carbs(g)": 112.75
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 41.47,
+      "Carbs(g)": 81.91
+    },
+    {
+      "Diet_type": "paleo",
+      "Protein(g)": 88.06,
+      "Carbs(g)": 14.19
+    },
+    {
+      "Diet_type": "paleo",
+      "Protein(g)": 7.25,
+      "Carbs(g)": 38.69
+    },
+    {
+      "Diet_type": "keto",
+      "Protein(g)": 53.94,
+      "Carbs(g)": 167.33
+    },
+    {
+      "Diet_type": "paleo",
+      "Protein(g)": 12.05,
+      "Carbs(g)": 31.38
+    },
+    {
+      "Diet_type": "vegan",
+      "Protein(g)": 43.5,
+      "Carbs(g)": 164.35
+    },
+    {
+      "Diet_type": "vegan",
+      "Protein(g)": 18.36,
+      "Carbs(g)": 51.95
+    },
+    {
+      "Diet_type": "keto",
+      "Protein(g)": 113.6,
+      "Carbs(g)": 18.01
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 18.12,
+      "Carbs(g)": 34.75
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 1.71,
+      "Carbs(g)": 10.42
+    },
+    {
+      "Diet_type": "paleo",
+      "Protein(g)": 53.12,
+      "Carbs(g)": 237.39
+    },
+    {
+      "Diet_type": "paleo",
+      "Protein(g)": 102.5,
+      "Carbs(g)": 38.41
+    },
+    {
+      "Diet_type": "paleo",
+      "Protein(g)": 129.28,
+      "Carbs(g)": 693.44
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 157.38,
+      "Carbs(g)": 149.14
+    },
+    {
+      "Diet_type": "vegan",
+      "Protein(g)": 138.65,
+      "Carbs(g)": 214.34
+    },
+    {
+      "Diet_type": "keto",
+      "Protein(g)": 29.05,
+      "Carbs(g)": 107.97
+    },
+    {
+      "Diet_type": "keto",
+      "Protein(g)": 29.99,
+      "Carbs(g)": 78.79
+    },
+    {
+      "Diet_type": "vegan",
+      "Protein(g)": 86.0,
+      "Carbs(g)": 180.46
+    },
+    {
+      "Diet_type": "paleo",
+      "Protein(g)": 5.57,
+      "Carbs(g)": 59.44
+    },
+    {
+      "Diet_type": "keto",
+      "Protein(g)": 184.22,
+      "Carbs(g)": 36.65
+    },
+    {
+      "Diet_type": "paleo",
+      "Protein(g)": 9.26,
+      "Carbs(g)": 42.6
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 59.07,
+      "Carbs(g)": 354.42
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 0.25,
+      "Carbs(g)": 13.74
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 118.05,
+      "Carbs(g)": 472.46
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 80.19,
+      "Carbs(g)": 552.52
+    },
+    {
+      "Diet_type": "vegan",
+      "Protein(g)": 50.67,
+      "Carbs(g)": 221.8
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 42.53,
+      "Carbs(g)": 30.13
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 46.6,
+      "Carbs(g)": 125.28
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 12.83,
+      "Carbs(g)": 6.31
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 29.35,
+      "Carbs(g)": 430.88
+    },
+    {
+      "Diet_type": "keto",
+      "Protein(g)": 49.86,
+      "Carbs(g)": 20.03
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 3.51,
+      "Carbs(g)": 56.44
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 97.62,
+      "Carbs(g)": 128.44
+    },
+    {
+      "Diet_type": "keto",
+      "Protein(g)": 18.85,
+      "Carbs(g)": 46.91
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 0.03,
+      "Carbs(g)": 10.16
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 179.26,
+      "Carbs(g)": 66.72
+    },
+    {
+      "Diet_type": "keto",
+      "Protein(g)": 65.96,
+      "Carbs(g)": 38.66
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 110.91,
+      "Carbs(g)": 53.3
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 457.76,
+      "Carbs(g)": 209.37
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 79.14,
+      "Carbs(g)": 306.42
+    },
+    {
+      "Diet_type": "vegan",
+      "Protein(g)": 27.5,
+      "Carbs(g)": 129.28
+    },
+    {
+      "Diet_type": "keto",
+      "Protein(g)": 57.18,
+      "Carbs(g)": 39.42
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 23.12,
+      "Carbs(g)": 7.63
+    },
+    {
+      "Diet_type": "paleo",
+      "Protein(g)": 286.03,
+      "Carbs(g)": 110.86
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 16.66,
+      "Carbs(g)": 4.35
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 34.18,
+      "Carbs(g)": 397.77
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 69.95,
+      "Carbs(g)": 117.51
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 24.7,
+      "Carbs(g)": 75.98
+    },
+    {
+      "Diet_type": "vegan",
+      "Protein(g)": 63.31,
+      "Carbs(g)": 346.83
+    },
+    {
+      "Diet_type": "vegan",
+      "Protein(g)": 76.56,
+      "Carbs(g)": 248.92
+    },
+    {
+      "Diet_type": "keto",
+      "Protein(g)": 210.22,
+      "Carbs(g)": 23.49
+    },
+    {
+      "Diet_type": "vegan",
+      "Protein(g)": 33.03,
+      "Carbs(g)": 663.3
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 111.69,
+      "Carbs(g)": 463.15
+    },
+    {
+      "Diet_type": "paleo",
+      "Protein(g)": 285.68,
+      "Carbs(g)": 142.68
+    },
+    {
+      "Diet_type": "vegan",
+      "Protein(g)": 22.36,
+      "Carbs(g)": 316.56
+    },
+    {
+      "Diet_type": "paleo",
+      "Protein(g)": 34.02,
+      "Carbs(g)": 119.1
+    },
+    {
+      "Diet_type": "vegan",
+      "Protein(g)": 26.2,
+      "Carbs(g)": 237.91
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 59.57,
+      "Carbs(g)": 180.26
+    },
+    {
+      "Diet_type": "keto",
+      "Protein(g)": 237.8,
+      "Carbs(g)": 67.71
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 145.46,
+      "Carbs(g)": 121.62
+    },
+    {
+      "Diet_type": "keto",
+      "Protein(g)": 7.63,
+      "Carbs(g)": 4.35
+    },
+    {
+      "Diet_type": "keto",
+      "Protein(g)": 52.14,
+      "Carbs(g)": 68.4
+    },
+    {
+      "Diet_type": "keto",
+      "Protein(g)": 132.42,
+      "Carbs(g)": 21.87
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 66.49,
+      "Carbs(g)": 6.44
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 51.45,
+      "Carbs(g)": 99.25
+    },
+    {
+      "Diet_type": "keto",
+      "Protein(g)": 27.85,
+      "Carbs(g)": 88.59
+    },
+    {
+      "Diet_type": "keto",
+      "Protein(g)": 177.5,
+      "Carbs(g)": 47.0
+    },
+    {
+      "Diet_type": "keto",
+      "Protein(g)": 320.1,
+      "Carbs(g)": 116.95
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 111.07,
+      "Carbs(g)": 36.19
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 276.13,
+      "Carbs(g)": 118.02
+    },
+    {
+      "Diet_type": "paleo",
+      "Protein(g)": 70.23,
+      "Carbs(g)": 224.84
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 73.27,
+      "Carbs(g)": 143.16
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 98.41,
+      "Carbs(g)": 386.62
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 38.29,
+      "Carbs(g)": 32.83
+    },
+    {
+      "Diet_type": "keto",
+      "Protein(g)": 273.63,
+      "Carbs(g)": 62.25
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 22.44,
+      "Carbs(g)": 74.32
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 217.5,
+      "Carbs(g)": 192.13
+    },
+    {
+      "Diet_type": "vegan",
+      "Protein(g)": 49.57,
+      "Carbs(g)": 318.05
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 315.57,
+      "Carbs(g)": 424.32
+    },
+    {
+      "Diet_type": "keto",
+      "Protein(g)": 184.02,
+      "Carbs(g)": 64.82
+    },
+    {
+      "Diet_type": "vegan",
+      "Protein(g)": 37.21,
+      "Carbs(g)": 111.41
+    },
+    {
+      "Diet_type": "paleo",
+      "Protein(g)": 120.87,
+      "Carbs(g)": 99.95
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 100.48,
+      "Carbs(g)": 6.75
+    },
+    {
+      "Diet_type": "keto",
+      "Protein(g)": 194.45,
+      "Carbs(g)": 33.01
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 21.76,
+      "Carbs(g)": 46.18
+    },
+    {
+      "Diet_type": "keto",
+      "Protein(g)": 96.15,
+      "Carbs(g)": 13.16
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 51.99,
+      "Carbs(g)": 192.73
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 198.07,
+      "Carbs(g)": 208.61
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 34.49,
+      "Carbs(g)": 205.58
+    },
+    {
+      "Diet_type": "keto",
+      "Protein(g)": 165.21,
+      "Carbs(g)": 72.4
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Protein(g)": 207.97,
+      "Carbs(g)": 77.55
+    },
+    {
+      "Diet_type": "keto",
+      "Protein(g)": 111.83,
+      "Carbs(g)": 49.08
+    },
+    {
+      "Diet_type": "dash",
+      "Protein(g)": 13.1,
+      "Carbs(g)": 24.59
+    },
+    {
+      "Diet_type": "vegan",
+      "Protein(g)": 55.62,
+      "Carbs(g)": 193.4
+    },
+    {
+      "Diet_type": "paleo",
+      "Protein(g)": 24.48,
+      "Carbs(g)": 13.2
+    }
+  ],
+  "correlations": {
+    "labels": [
+      "Protein(g)",
+      "Carbs(g)",
+      "Fat(g)"
+    ],
+    "matrix": [
+      [
+        1.0,
+        0.156,
+        0.478
+      ],
+      [
+        0.156,
+        1.0,
+        0.269
+      ],
+      [
+        0.478,
+        0.269,
+        1.0
+      ]
+    ]
+  },
+  "top_protein_recipes": [
+    {
+      "Diet_type": "paleo",
+      "Recipe_name": "Swiss Paleo’s Homemade Italian & Chorizo Sausage",
+      "Protein(g)": 1273.61,
+      "Carbs(g)": 83.34,
+      "Fat(g)": 1608.54
+    },
+    {
+      "Diet_type": "dash",
+      "Recipe_name": "Salmon Mousse",
+      "Protein(g)": 1239.47,
+      "Carbs(g)": 22.4,
+      "Fat(g)": 983.36
+    },
+    {
+      "Diet_type": "dash",
+      "Recipe_name": "Homemade Turkey Alphabet Soup",
+      "Protein(g)": 1190.35,
+      "Carbs(g)": 49.13,
+      "Fat(g)": 297.45
+    },
+    {
+      "Diet_type": "paleo",
+      "Recipe_name": "Turkey Soup",
+      "Protein(g)": 1142.58,
+      "Carbs(g)": 693.64,
+      "Fat(g)": 287.86
+    },
+    {
+      "Diet_type": "keto",
+      "Recipe_name": "Sara Louise's Keto Smoked Holiday Turkey",
+      "Protein(g)": 1092.0,
+      "Carbs(g)": 49.28,
+      "Fat(g)": 313.81
+    },
+    {
+      "Diet_type": "dash",
+      "Recipe_name": "Barbecue Chicken Legs",
+      "Protein(g)": 1017.25,
+      "Carbs(g)": 241.93,
+      "Fat(g)": 1002.07
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Recipe_name": "Fava Bean Salad with Mountain Ham and Mint",
+      "Protein(g)": 970.31,
+      "Carbs(g)": 823.34,
+      "Fat(g)": 322.84
+    },
+    {
+      "Diet_type": "dash",
+      "Recipe_name": "12th Man Hot Wings",
+      "Protein(g)": 807.03,
+      "Carbs(g)": 49.17,
+      "Fat(g)": 649.49
+    },
+    {
+      "Diet_type": "keto",
+      "Recipe_name": "Mayo Free Deviled Eggs (Paleo, Whole30 + Keto)",
+      "Protein(g)": 766.99,
+      "Carbs(g)": 41.29,
+      "Fat(g)": 287.59
+    },
+    {
+      "Diet_type": "keto",
+      "Recipe_name": "Low Carb Beef and Cheddar Cauliflower Bake, THM S meal, Keto too",
+      "Protein(g)": 710.81,
+      "Carbs(g)": 112.56,
+      "Fat(g)": 1154.61
+    },
+    {
+      "Diet_type": "paleo",
+      "Recipe_name": "Orange and Five-Spice Roasted Chicken Legs | Keto, Paleo",
+      "Protein(g)": 677.22,
+      "Carbs(g)": 41.71,
+      "Fat(g)": 686.9
+    },
+    {
+      "Diet_type": "keto",
+      "Recipe_name": "Orange and Five-Spice Roasted Chicken Legs | Keto, Paleo",
+      "Protein(g)": 677.22,
+      "Carbs(g)": 41.71,
+      "Fat(g)": 686.9
+    },
+    {
+      "Diet_type": "keto",
+      "Recipe_name": "Low Carb Salmon Cakes (Keto, Grain Free)",
+      "Protein(g)": 656.95,
+      "Carbs(g)": 13.25,
+      "Fat(g)": 501.19
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Recipe_name": "Poached Salt Cod with Vegetables and Garlic Mayonnaise",
+      "Protein(g)": 656.65,
+      "Carbs(g)": 315.52,
+      "Fat(g)": 73.73
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Recipe_name": "Mediterranean Pizza",
+      "Protein(g)": 628.29,
+      "Carbs(g)": 3405.55,
+      "Fat(g)": 333.76
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Recipe_name": "Orange and Cumin Leg of Lamb with Roasted Tomatoes and Garlic Recipe",
+      "Protein(g)": 607.03,
+      "Carbs(g)": 109.27,
+      "Fat(g)": 489.93
+    },
+    {
+      "Diet_type": "paleo",
+      "Recipe_name": "Vietnamese Pho Pressure Cooker (Noodle Soup)",
+      "Protein(g)": 602.91,
+      "Carbs(g)": 274.87,
+      "Fat(g)": 400.01
+    },
+    {
+      "Diet_type": "mediterranean",
+      "Recipe_name": "Meatballs Braised with Kale",
+      "Protein(g)": 531.48,
+      "Carbs(g)": 279.16,
+      "Fat(g)": 566.41
+    },
+    {
+      "Diet_type": "dash",
+      "Recipe_name": "Jazzed Up Turkey Tetrazzini",
+      "Protein(g)": 517.47,
+      "Carbs(g)": 575.58,
+      "Fat(g)": 377.75
+    },
+    {
+      "Diet_type": "paleo",
+      "Recipe_name": "Paleo Slow Cooker Honey Garlic Chicken and Vegetables recipes",
+      "Protein(g)": 501.65,
+      "Carbs(g)": 312.39,
+      "Fat(g)": 58.06
+    },
+    {
+      "Diet_type": "vegan",
+      "Recipe_name": "Tangy Teriyaki Salmon",
+      "Protein(g)": 431.1,
+      "Carbs(g)": 39.47,
+      "Fat(g)": 276.51
+    },
+    {
+      "Diet_type": "vegan",
+      "Recipe_name": "Mini nut roasts with candied carrots",
+      "Protein(g)": 421.72,
+      "Carbs(g)": 1636.67,
+      "Fat(g)": 267.25
+    },
+    {
+      "Diet_type": "vegan",
+      "Recipe_name": "Vegan Pinto Bean Chili",
+      "Protein(g)": 381.55,
+      "Carbs(g)": 1264.46,
+      "Fat(g)": 37.23
+    },
+    {
+      "Diet_type": "vegan",
+      "Recipe_name": "Vegan Chili and Cornbread Casserole",
+      "Protein(g)": 319.54,
+      "Carbs(g)": 1159.0,
+      "Fat(g)": 291.7
+    },
+    {
+      "Diet_type": "vegan",
+      "Recipe_name": "Kentucky fried seitan",
+      "Protein(g)": 317.43,
+      "Carbs(g)": 703.99,
+      "Fat(g)": 534.41
+    }
+  ]
+}
