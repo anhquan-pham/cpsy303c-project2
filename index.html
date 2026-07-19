@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nutritional Insights Dashboard</title>
+
+    <!-- Tailwind CSS 2.0 (kept from the mockup for consistency; Person 3 deploys this) -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.0.0/dist/tailwind.min.css" rel="stylesheet">
+    <!-- Chart.js 4.4 UMD build (pinned; exposes global `Chart`) -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.6/dist/chart.umd.min.js"></script>
+
+    <style>
+        /* Status banner (loading / cold-start / error). */
+        .status-banner {
+            display: none;
+            padding: 0.6rem 1rem;
+            border-radius: 0.5rem;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Hand-rolled correlation heatmap. */
+        .heatmap-grid {
+            display: grid;
+            gap: 3px;
+            /* Fixed 3x3 matrix: cap width so square cells stay ~size of the other
+               chart cards instead of stretching the grid row. */
+            max-width: 300px;
+            margin: 0 auto;
+        }
+        .heatmap-corner { background: transparent; }
+        .heatmap-head {
+            font-size: 0.7rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2px;
+            text-align: center;
+            color: #374151;
+        }
+        .heatmap-rowhead { justify-content: flex-end; padding-right: 6px; }
+        .heatmap-cell {
+            aspect-ratio: 1 / 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 600;
+            border-radius: 4px;
+            min-height: 34px;
+        }
+        .heatmap-legend {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 8px;
+            font-size: 0.7rem;
+            color: #6b7280;
+        }
+        .heatmap-scale {
+            flex: 1;
+            height: 8px;
+            border-radius: 4px;
+            background: linear-gradient(to right, rgb(0,114,178), #fff, rgb(213,94,0));
+        }
+
+        /* Small color dot in the recipe table to tie rows to diet colors. */
+        .diet-dot {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 6px;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+
+    <header class="bg-blue-600 p-4 text-white">
+        <h1 class="text-3xl font-semibold">Nutritional Insights</h1>
+        <p class="text-blue-100 text-sm">Diet dataset analysis, served by an Azure Function.</p>
+    </header>
+
+    <main class="container mx-auto p-6">
+
+        <!-- Loading / cold-start / error banner -->
+        <div id="status-banner" class="status-banner"></div>
+
+        <!-- STEP 4 - Metadata (execution time is the rubric-marked value) -->
+        <section class="mb-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="bg-white p-4 shadow rounded-lg">
+                    <div class="text-xs uppercase text-gray-500">Function Execution Time</div>
+                    <div id="meta-exec" class="text-2xl font-semibold text-blue-600">-</div>
+                </div>
+                <div class="bg-white p-4 shadow rounded-lg">
+                    <div class="text-xs uppercase text-gray-500">Rows Analyzed</div>
+                    <div id="meta-rows" class="text-2xl font-semibold">-</div>
+                </div>
+                <div class="bg-white p-4 shadow rounded-lg">
+                    <div class="text-xs uppercase text-gray-500">Dataset</div>
+                    <div id="meta-dataset" class="text-lg font-semibold truncate">-</div>
+                </div>
+                <div class="bg-white p-4 shadow rounded-lg">
+                    <div class="text-xs uppercase text-gray-500">Generated</div>
+                    <div id="meta-generated" class="text-sm font-medium">-</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- STEP 3 - Controls: diet dropdown (from metadata) + refresh -->
+        <section class="mb-8">
+            <div class="flex flex-wrap items-end gap-4">
+                <div>
+                    <label for="diet-select" class="block text-sm text-gray-600 mb-1">Diet type</label>
+                    <select id="diet-select" class="p-2 border rounded w-full sm:w-56 bg-white">
+                        <option value="all">All Diet Types</option>
+                    </select>
+                </div>
+                <button id="refresh-btn" class="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700">
+                    Refresh
+                </button>
+            </div>
+        </section>
+
+        <!-- STEP 2 - Four visualizations.
+             Each canvas sits in a `relative` height wrapper so Chart.js sizes to
+             the parent, with responsive + maintainAspectRatio:false. -->
+        <section class="mb-8">
+            <h2 class="text-2xl font-semibold mb-4">Visualizations</h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div class="bg-white p-4 shadow-lg rounded-lg">
+                    <h3 class="font-semibold">Average Macronutrients by Diet</h3>
+                    <p class="text-sm text-gray-600 mb-2">Grouped bar: protein, carbs, fat per diet type.</p>
+                    <div class="relative h-64">
+                        <canvas id="barChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="bg-white p-4 shadow-lg rounded-lg">
+                    <h3 class="font-semibold">Protein vs Carbs</h3>
+                    <p class="text-sm text-gray-600 mb-2">Scatter of recipes, colored by diet type.</p>
+                    <div class="relative h-64">
+                        <canvas id="scatterPlot"></canvas>
+                    </div>
+                </div>
+
+                <div class="bg-white p-4 shadow-lg rounded-lg">
+                    <h3 class="font-semibold">Recipe Distribution</h3>
+                    <p class="text-sm text-gray-600 mb-2">Pie: recipe count per diet type.</p>
+                    <div class="relative h-64">
+                        <canvas id="pieChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="bg-white p-4 shadow-lg rounded-lg">
+                    <h3 class="font-semibold">Macronutrient Correlations</h3>
+                    <p class="text-sm text-gray-600 mb-2">Heatmap of protein / carbs / fat correlation.</p>
+                    <div id="heatmap" class="w-full"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Top protein recipes table + pagination -->
+        <section class="mb-8">
+            <h2 class="text-2xl font-semibold mb-4">Top Protein Recipes</h2>
+            <div class="bg-white shadow-lg rounded-lg overflow-x-auto">
+                <table class="min-w-full text-sm">
+                    <thead class="bg-gray-100 text-gray-600 text-left">
+                        <tr>
+                            <th class="px-3 py-2">Diet</th>
+                            <th class="px-3 py-2">Recipe</th>
+                            <th class="px-3 py-2 text-right">Protein (g)</th>
+                            <th class="px-3 py-2 text-right">Carbs (g)</th>
+                            <th class="px-3 py-2 text-right">Fat (g)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="recipe-body"></tbody>
+                </table>
+            </div>
+            <div id="pagination" class="flex justify-center flex-wrap gap-2 mt-4"></div>
+        </section>
+
+    </main>
+
+    <footer class="bg-blue-600 p-4 text-white text-center mt-10">
+        <p>&copy; 2026 Nutritional Insights. Cloud Computing Phase 2.</p>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
