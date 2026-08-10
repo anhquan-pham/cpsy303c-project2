@@ -1,0 +1,10 @@
+__pycache__/
+*.py[cod]
+.python_packages/
+.venv/
+venv/
+local.settings.json
+.func/
+bin/
+obj/
+.DS_Store
