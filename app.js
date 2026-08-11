@@ -1,15 +1,17 @@
 /*
- * Nutritional Insights dashboard - Cloud Computing Phase 2
- * Fetches insights from the deployed Azure Function and renders 4 visualizations.
+ * Nutritional Insights dashboard - Cloud Computing Phase 3
+ * Renders 4 visualizations plus a searchable, server-paged recipe explorer.
  *
  * ---------------------------------------------------------------------------
- * OBSERVED RESPONSE SHAPE (verified against the live endpoint on 2026-07-17,
- * not assumed from a description). See sample-response.json for a full capture.
+ * RESPONSE SHAPES
  *
- * GET /api/insights            -> full dataset
- * GET /api/insights?diet_type=keto  -> RECOMPUTES EVERY KEY for that diet
- *                                       (full server round-trip, not a partial slice)
- * GET /api/ping                -> { "status": "ok", "time": "..." }
+ * GET /api/insights                 -> the whole dataset
+ * GET /api/insights?diet_type=keto  -> the same shape, one diet
+ *
+ *   Phase 2 recomputed this on every request. Phase 3 does not: the payload is
+ *   built once when All_Diets.csv changes and read back out of memory or SQL,
+ *   so metadata now also carries served_from ("memory" | "sql"),
+ *   cache_build_id and response_time_ms.
  *
  * {
  *   metadata: {
@@ -25,6 +27,21 @@
  *   correlations: { labels: ["Protein(g)","Carbs(g)","Fat(g)"], matrix: [[..],[..],[..]] },
  *   top_protein_recipes: [ { Diet_type, Recipe_name, "Protein(g)", "Carbs(g)", "Fat(g)" }, ... ] // 5 per diet
  * }
+ *
+ * GET /api/recipes?q=&diet_type=&page=&page_size=&sort=     (Phase 3)
+ *
+ *   Searching, filtering and paging all happen in SQL. `items` is only ever one
+ *   page long; `total` is the size of the whole matching set, which is what the
+ *   pager needs and what the browser must not have to download to know.
+ *
+ * {
+ *   items: [ { id, Diet_type, Recipe_name, Cuisine_type, "Protein(g)", "Carbs(g)", "Fat(g)" }, ... ],
+ *   total: 732, page: 1, page_size: 25, total_pages: 30,
+ *   query: { q, diet_type, sort },
+ *   metadata: { served_from, response_time_ms }
+ * }
+ *
+ * GET /api/ping                     -> { "status": "ok", "time": "..." }
  *
  * NOTE: keys carry "(g)" suffixes and Diet_type is capitalized. Access exactly.
  * ---------------------------------------------------------------------------
@@ -60,38 +77,129 @@ const MACRO_COLORS = { protein: '#0072B2', carbs: '#E69F00', fat: '#D55E00' };
 // -----------------------------------------------------------------------------
 let lastGood = null;      // last successful response, kept so the UI never blanks on error
 let dropdownReady = false; // populate the diet dropdown only once (from the full response)
-let tableRows = [];       // top_protein_recipes for the current view
-let currentPage = 1;
-const PAGE_SIZE = 10;
 
 // Live Chart.js instances. Destroyed before re-render so filter changes do not
 // leak instances or leave stale tooltips behind.
 const charts = { bar: null, scatter: null, pie: null };
 
-// =============================================================================
-// STEP 1 - FETCH LAYER. Everything goes through fetchInsights().
-// =============================================================================
-async function fetchInsights(dietType) {
-  const useFilter = dietType && dietType !== 'all';
-  const url = useFilter
-    ? `${API_BASE}/api/insights?diet_type=${encodeURIComponent(dietType)}`
-    : `${API_BASE}/api/insights`;
+// Recipe explorer. Every field here is a query parameter the server acts on -
+// nothing in this object is used to filter or slice rows in the browser.
+const explorer = {
+  q: '',
+  dietType: 'all',
+  page: 1,
+  pageSize: 25,
+  sort: 'name_asc',
+  totalPages: 1,
+  // Monotonic id of the newest in-flight request. Typing "chicken" fires several
+  // searches; without this, a slow response for "chi" can land after "chicken"
+  // and overwrite the results with the wrong ones.
+  requestId: 0,
+};
 
-  const res = await fetch(url, { headers: { Accept: 'application/json' } });
+const SEARCH_DEBOUNCE_MS = 350;
+
+// =============================================================================
+// STEP 1 - FETCH LAYER.
+//
+// Every request the dashboard makes goes through apiFetch. That is deliberate:
+// it is the single place a header, a token refresh or a 401 redirect has to be
+// added, so authentication does not have to be threaded through each caller.
+// =============================================================================
+async function apiFetch(path, params = {}) {
+  const url = new URL(`${API_BASE}/api/${path}`);
+  Object.entries(params).forEach(([key, value]) => {
+    // Skip empty values so the URL stays readable: /api/recipes?page=2 rather
+    // than /api/recipes?q=&diet_type=&page=2.
+    if (value !== undefined && value !== null && value !== '') {
+      url.searchParams.set(key, value);
+    }
+  });
+
+  const headers = { Accept: 'application/json' };
+
+  // --- AUTH HOOK (Person 3) --------------------------------------------------
+  // Add the bearer token here and every call in the app is authenticated:
+  //     const token = sessionStorage.getItem('token');
+  //     if (token) headers.Authorization = `Bearer ${token}`;
+  // A 401 can be turned into a redirect to the login page in the block below.
+  // ---------------------------------------------------------------------------
+
+  const res = await fetch(url, { headers });
   if (!res.ok) {
-    // Non-2xx surfaces as a real error, not a silent console log.
-    throw new Error(`HTTP ${res.status} ${res.statusText}`);
+    // Surface the function's own error text when it sends one - "the pipeline
+    // has not run yet" is far more useful on screen than a bare 503.
+    let detail = '';
+    try {
+      const body = await res.json();
+      detail = body.detail || body.error || '';
+    } catch {
+      /* response was not JSON; the status line is all we have */
+    }
+    throw new Error(`HTTP ${res.status} ${res.statusText}${detail ? ` - ${detail}` : ''}`);
   }
   return res.json();
 }
 
+function fetchInsights(dietType) {
+  const useFilter = dietType && dietType !== 'all';
+  return apiFetch('insights', useFilter ? { diet_type: dietType } : {});
+}
+
+function fetchRecipes({ q, dietType, page, pageSize, sort }) {
+  return apiFetch('recipes', {
+    q,
+    diet_type: dietType && dietType !== 'all' ? dietType : '',
+    page,
+    page_size: pageSize,
+    sort,
+  });
+}
+
 async function pingHealth() {
   try {
-    const res = await fetch(`${API_BASE}/api/ping`, { headers: { Accept: 'application/json' } });
-    return res.ok;
+    await apiFetch('ping');
+    return true;
   } catch {
     return false;
   }
+}
+
+// =============================================================================
+// AUTH HOOK (Person 3 owns the body of everything in this block)
+//
+// The dashboard already calls requireAuth() before it renders anything and
+// already has a header slot for the user's name and a logout button. Replacing
+// the three stubs below is the whole integration - no other part of this file
+// needs to change.
+// =============================================================================
+
+// Return false to stop the dashboard rendering (and send the visitor to the
+// login page instead). Returning true here means "no auth yet, show everyone".
+function requireAuth() {
+  return true;
+}
+
+// Reveals the header slot and puts the signed-in user's name in it.
+function setCurrentUser(name) {
+  const box = document.getElementById('user-box');
+  const label = document.getElementById('user-name');
+  if (!box || !label) return;
+
+  if (name) {
+    label.textContent = name;
+    box.classList.add('is-signed-in');
+  } else {
+    label.textContent = '';
+    box.classList.remove('is-signed-in');
+  }
+}
+
+// Registers what the logout button should do. Unwired until Person 3 calls it,
+// which is why the button stays hidden alongside the name.
+function onLogout(handler) {
+  const btn = document.getElementById('logout-btn');
+  if (btn) btn.addEventListener('click', handler);
 }
 
 // -----------------------------------------------------------------------------
@@ -162,9 +270,8 @@ function render(data) {
   renderPie(data.diet_counts);
   renderHeatmap(data.correlations);
 
-  tableRows = Array.isArray(data.top_protein_recipes) ? data.top_protein_recipes : [];
-  currentPage = 1;
-  renderTable();
+  // The recipe table is NOT rendered from this payload any more. It has its own
+  // endpoint and its own lifecycle - see loadRecipes().
 }
 
 // STEP 4 - metadata. execution_time_ms is the rubric-marked value; row_count
@@ -362,64 +469,192 @@ function cell(text, cls) {
   return d;
 }
 
-// STEP 3 - table + pagination, wired to top_protein_recipes.
-function renderTable() {
-  const body = document.getElementById('recipe-body');
+// =============================================================================
+// STEP 3 - DATA INTERACTION: keyword search, diet filter, pagination.
+//
+// None of this filters or slices in the browser. Each of these functions renders
+// exactly what one /api/recipes response contained; changing a control sends a
+// new query and asks the database for the answer.
+// =============================================================================
+const RECIPE_COLUMNS = 6;
+
+const recipeBody = () => document.getElementById('recipe-body');
+
+// A single full-width row: empty state, error, or "searching".
+function setRecipeMessage(text) {
+  const body = recipeBody();
   body.innerHTML = '';
-  const totalPages = Math.max(1, Math.ceil(tableRows.length / PAGE_SIZE));
-  if (currentPage > totalPages) currentPage = totalPages;
-
-  const start = (currentPage - 1) * PAGE_SIZE;
-  const pageRows = tableRows.slice(start, start + PAGE_SIZE);
-
-  if (pageRows.length === 0) {
-    const tr = document.createElement('tr');
-    tr.innerHTML = '<td colspan="5" class="px-3 py-4 text-center text-gray-500">No recipes.</td>';
-    body.appendChild(tr);
-  } else {
-    pageRows.forEach((r, idx) => {
-      const tr = document.createElement('tr');
-      tr.className = idx % 2 ? 'bg-gray-50' : '';
-      tr.innerHTML = `
-        <td class="px-3 py-2">
-          <span class="diet-dot" style="background:${dietColor(r.Diet_type)}"></span>${r.Diet_type}
-        </td>
-        <td class="px-3 py-2">${escapeHtml(r.Recipe_name)}</td>
-        <td class="px-3 py-2 text-right">${fmt(r['Protein(g)'])}</td>
-        <td class="px-3 py-2 text-right">${fmt(r['Carbs(g)'])}</td>
-        <td class="px-3 py-2 text-right">${fmt(r['Fat(g)'])}</td>`;
-      body.appendChild(tr);
-    });
-  }
-
-  renderPagination(totalPages);
+  const td = document.createElement('td');
+  td.colSpan = RECIPE_COLUMNS;
+  td.className = 'px-3 py-6 text-center text-gray-500';
+  td.textContent = text; // textContent, so an error string can never inject markup
+  const tr = document.createElement('tr');
+  tr.appendChild(td);
+  body.appendChild(tr);
 }
 
-function renderPagination(totalPages) {
+async function loadRecipes() {
+  const reqId = ++explorer.requestId;
+  const body = recipeBody();
+  body.classList.add('results-loading');
+
+  try {
+    const data = await fetchRecipes({
+      q: explorer.q,
+      dietType: explorer.dietType,
+      page: explorer.page,
+      pageSize: explorer.pageSize,
+      sort: explorer.sort,
+    });
+
+    // A newer keystroke already fired a newer search; this answer is stale.
+    if (reqId !== explorer.requestId) return;
+
+    // Trust the server's echo rather than local state: it clamps the page, so
+    // asking for page 400 of a 30-page result comes back as the page it served.
+    explorer.page = data.page;
+    explorer.totalPages = data.total_pages;
+
+    renderRecipeRows(data.items);
+    renderRecipeSummary(data);
+    renderPagination();
+  } catch (err) {
+    if (reqId !== explorer.requestId) return;
+    setRecipeMessage(`Could not load recipes: ${err.message}`);
+    document.getElementById('recipe-summary').textContent = '';
+    document.getElementById('pagination').innerHTML = '';
+  } finally {
+    if (reqId === explorer.requestId) body.classList.remove('results-loading');
+  }
+}
+
+function renderRecipeRows(items) {
+  if (!Array.isArray(items) || items.length === 0) {
+    setRecipeMessage(
+      explorer.q
+        ? `No recipes match "${explorer.q}". Try a shorter keyword, or clear the filters.`
+        : 'No recipes to show.'
+    );
+    return;
+  }
+
+  const body = recipeBody();
+  body.innerHTML = '';
+  items.forEach((r, idx) => {
+    const tr = document.createElement('tr');
+    tr.className = idx % 2 ? 'bg-gray-50' : '';
+    // dietColor() resolves through a fixed palette map, so the only thing
+    // reaching the style attribute is one of our own hex constants.
+    tr.innerHTML = `
+      <td class="px-3 py-2 whitespace-nowrap">
+        <span class="diet-dot" style="background:${dietColor(r.Diet_type)}"></span>${escapeHtml(r.Diet_type ?? '-')}
+      </td>
+      <td class="px-3 py-2">${escapeHtml(r.Recipe_name ?? '-')}</td>
+      <td class="px-3 py-2 text-gray-600">${escapeHtml(r.Cuisine_type ?? '-')}</td>
+      <td class="px-3 py-2 text-right">${fmt(r['Protein(g)'])}</td>
+      <td class="px-3 py-2 text-right">${fmt(r['Carbs(g)'])}</td>
+      <td class="px-3 py-2 text-right">${fmt(r['Fat(g)'])}</td>`;
+    body.appendChild(tr);
+  });
+}
+
+// "Showing 26-50 of 732 recipes matching "chicken" in keto". The total comes
+// from the server's COUNT, which is the only reason we can state it without
+// having downloaded all 732 rows.
+function renderRecipeSummary(data) {
+  const el = document.getElementById('recipe-summary');
+  const total = data.total || 0;
+
+  if (total === 0) {
+    el.textContent = 'No matching recipes';
+    return;
+  }
+
+  const first = (data.page - 1) * data.page_size + 1;
+  const last = Math.min(data.page * data.page_size, total);
+  const scope = [];
+  if (data.query && data.query.q) scope.push(`matching "${data.query.q}"`);
+  if (data.query && data.query.diet_type && data.query.diet_type !== 'all') {
+    scope.push(`in ${data.query.diet_type}`);
+  }
+
+  el.textContent =
+    `Showing ${first.toLocaleString()}-${last.toLocaleString()} of ` +
+    `${total.toLocaleString()} recipes${scope.length ? ' ' + scope.join(' ') : ''}`;
+}
+
+/**
+ * Which page numbers to draw. 7,806 recipes is 313 pages at 25 a page, so a
+ * button per page is not an option - this keeps the ends, a window around the
+ * current page, and marks the jumps between them.
+ *
+ *   pageWindow(1, 313)   -> [1, 2, 3, 'gap', 313]
+ *   pageWindow(50, 313)  -> [1, 'gap', 48, 49, 50, 51, 52, 'gap', 313]
+ *   pageWindow(2, 4)     -> [1, 2, 3, 4]
+ */
+function pageWindow(current, total, span = 2) {
+  const wanted = new Set([1, total]);
+  for (let p = current - span; p <= current + span; p++) {
+    if (p >= 1 && p <= total) wanted.add(p);
+  }
+
+  const out = [];
+  let previous = 0;
+  [...wanted]
+    .sort((a, b) => a - b)
+    .forEach((p) => {
+      if (previous && p - previous > 1) out.push('gap');
+      out.push(p);
+      previous = p;
+    });
+  return out;
+}
+
+function renderPagination() {
   const nav = document.getElementById('pagination');
   nav.innerHTML = '';
+  const { page, totalPages } = explorer;
 
-  const mkBtn = (label, page, opts = {}) => {
+  const goTo = (p) => {
+    explorer.page = Math.min(Math.max(1, p), totalPages);
+    loadRecipes();
+    // The pager sits below a full page of rows; bring the top of the results
+    // back into view instead of leaving the reader at the bottom of page 2.
+    document.getElementById('recipe-search').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  };
+
+  const mkBtn = (label, opts = {}) => {
     const b = document.createElement('button');
     b.textContent = label;
     b.className = opts.active
       ? 'px-3 py-1 bg-blue-600 text-white rounded'
       : 'px-3 py-1 bg-gray-300 rounded hover:bg-gray-400 disabled:opacity-40 disabled:cursor-not-allowed';
     b.disabled = !!opts.disabled;
-    if (!opts.disabled && !opts.active) {
-      b.addEventListener('click', () => {
-        currentPage = page;
-        renderTable();
-      });
-    }
+    if (opts.onClick && !opts.disabled && !opts.active) b.addEventListener('click', opts.onClick);
     return b;
   };
 
-  nav.appendChild(mkBtn('Previous', currentPage - 1, { disabled: currentPage <= 1 }));
-  for (let p = 1; p <= totalPages; p++) {
-    nav.appendChild(mkBtn(String(p), p, { active: p === currentPage }));
-  }
-  nav.appendChild(mkBtn('Next', currentPage + 1, { disabled: currentPage >= totalPages }));
+  nav.appendChild(mkBtn('« First', { disabled: page <= 1, onClick: () => goTo(1) }));
+  nav.appendChild(mkBtn('‹ Prev', { disabled: page <= 1, onClick: () => goTo(page - 1) }));
+
+  pageWindow(page, totalPages).forEach((entry) => {
+    if (entry === 'gap') {
+      const gap = document.createElement('span');
+      gap.className = 'page-gap';
+      gap.textContent = '…';
+      nav.appendChild(gap);
+      return;
+    }
+    nav.appendChild(mkBtn(String(entry), { active: entry === page, onClick: () => goTo(entry) }));
+  });
+
+  nav.appendChild(mkBtn('Next ›', { disabled: page >= totalPages, onClick: () => goTo(page + 1) }));
+  nav.appendChild(mkBtn('Last »', { disabled: page >= totalPages, onClick: () => goTo(totalPages) }));
+
+  const label = document.createElement('span');
+  label.className = 'text-sm text-gray-600 ml-2';
+  label.textContent = `Page ${page.toLocaleString()} of ${totalPages.toLocaleString()}`;
+  nav.appendChild(label);
 }
 
 // -----------------------------------------------------------------------------
@@ -439,15 +674,78 @@ function escapeHtml(s) {
 // Wire-up
 // =============================================================================
 function init() {
-  document.getElementById('diet-select').addEventListener('change', (e) => {
+  // Person 3: return false from requireAuth() (and redirect to the login page)
+  // and nothing below runs - no charts, no data, no requests.
+  if (!requireAuth()) return;
+
+  const dietSelect = document.getElementById('diet-select');
+  const search = document.getElementById('recipe-search');
+  const sortSelect = document.getElementById('recipe-sort');
+  const pageSizeSelect = document.getElementById('recipe-page-size');
+
+  // Diet type drives both halves of the page.
+  dietSelect.addEventListener('change', (e) => {
+    explorer.dietType = e.target.value;
+    explorer.page = 1; // a different filter means the page you were on is meaningless
     load(e.target.value);
+    loadRecipes();
   });
+
   document.getElementById('refresh-btn').addEventListener('click', () => {
-    const diet = document.getElementById('diet-select').value || 'all';
-    load(diet);
+    load(dietSelect.value || 'all');
+    loadRecipes();
+  });
+
+  // Keyword search. Debounced so typing "chicken" is one or two queries rather
+  // than seven; Enter skips the wait.
+  let searchTimer = null;
+  const runSearch = () => {
+    const next = search.value.trim();
+    if (next === explorer.q) return; // nothing actually changed
+    explorer.q = next;
+    explorer.page = 1;
+    loadRecipes();
+  };
+  search.addEventListener('input', () => {
+    clearTimeout(searchTimer);
+    searchTimer = setTimeout(runSearch, SEARCH_DEBOUNCE_MS);
+  });
+  search.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      clearTimeout(searchTimer);
+      runSearch();
+    }
+  });
+
+  sortSelect.addEventListener('change', (e) => {
+    explorer.sort = e.target.value;
+    explorer.page = 1;
+    loadRecipes();
+  });
+
+  pageSizeSelect.addEventListener('change', (e) => {
+    explorer.pageSize = Number(e.target.value) || 25;
+    explorer.page = 1;
+    loadRecipes();
+  });
+
+  document.getElementById('recipe-reset').addEventListener('click', () => {
+    // Only re-fetch the charts if the diet filter was actually narrowing them.
+    const chartsNeedReload = dietSelect.value !== 'all';
+
+    search.value = '';
+    sortSelect.value = 'name_asc';
+    pageSizeSelect.value = '25';
+    dietSelect.value = 'all';
+    Object.assign(explorer, { q: '', dietType: 'all', sort: 'name_asc', pageSize: 25, page: 1 });
+
+    if (chartsNeedReload) load('all');
+    loadRecipes();
   });
 
   load('all');
+  loadRecipes();
 }
 
 document.addEventListener('DOMContentLoaded', init);
