@@ -52,10 +52,13 @@ from auth import oauth_github
 
 import os
 import io
+import io
+import os
 import json
 import time
 import struct
 import logging
+from collections import OrderedDict
 from datetime import datetime, timezone
 
 import azure.functions as func
@@ -209,6 +212,8 @@ def me(req: func.HttpRequest) -> func.HttpResponse:
 
     return _json_response({"name": payload["name"], "email": payload["email"]})
 
+app = func.FunctionApp(http_auth_level=func.AuthLevel.ANONYMOUS)
+
 MACROS = ["Protein(g)", "Carbs(g)", "Fat(g)"]
 
 # Cosmos-style "all diets" key, kept as the id for the unfiltered payload.
@@ -226,6 +231,34 @@ SQL_COPT_SS_ACCESS_TOKEN = 1256
 # can show pre-update numbers after All_Diets.csv changes.
 _MEM_CACHE: dict[str, tuple[float, str, dict]] = {}
 _MEM_TTL_SECONDS = 30.0
+
+# Search results get their own cache rather than sharing _MEM_CACHE, because the
+# key space here is unbounded - every distinct search term is a new key, so an
+# unbounded dict would be a slow memory leak. Capped and evicted oldest-first.
+# Same TTL as above, for the same correctness reason.
+_RECIPE_CACHE: "OrderedDict[str, tuple[float, dict]]" = OrderedDict()
+_RECIPE_CACHE_MAX = 64
+
+# Pagination limits for /api/recipes. The maximum exists so a caller cannot ask
+# for all 7,806 rows in one response and undo the point of paging.
+DEFAULT_PAGE_SIZE = 25
+MAX_PAGE_SIZE = 100
+MAX_QUERY_LENGTH = 200
+
+# Sort whitelist. The `sort` parameter names a KEY here; the value is never built
+# from caller input, because ORDER BY cannot be parameterised and interpolating a
+# query string into it would be a SQL injection hole.
+_SORT_ORDERS = {
+    "name_asc": "recipe_name ASC",
+    "name_desc": "recipe_name DESC",
+    "protein_desc": "protein_g DESC",
+    "protein_asc": "protein_g ASC",
+    "carbs_desc": "carbs_g DESC",
+    "carbs_asc": "carbs_g ASC",
+    "fat_desc": "fat_g DESC",
+    "fat_asc": "fat_g ASC",
+}
+DEFAULT_SORT = "name_asc"
 
 # NOTE: CORS is handled in the Azure portal (Function App > API > CORS).
 # Do NOT set Access-Control-Allow-Origin here too, or the browser sees a
@@ -558,6 +591,11 @@ WHEN NOT MATCHED THEN INSERT (id, build_id, summary) VALUES (1, src.build_id, sr
     # new build up when their entries expire (see _MEM_TTL_SECONDS).
     global _MEM_CACHE
     _MEM_CACHE = {}
+    # Clear this instance's memory caches immediately. Other instances pick the
+    # new build up when their entries expire (see _MEM_TTL_SECONDS).
+    global _MEM_CACHE
+    _MEM_CACHE = {}
+    _RECIPE_CACHE.clear()
 
     logging.info("pipeline complete: %s", json.dumps(summary))
     return summary
@@ -627,6 +665,7 @@ def insights(req: func.HttpRequest) -> func.HttpResponse:
         payload["metadata"]["response_time_ms"] = round((time.perf_counter() - start) * 1000, 1)
 
         return func.HttpResponse(json.dumps(payload), mimetype="application/json", headers=_cors_headers())
+        return func.HttpResponse(json.dumps(payload), mimetype="application/json")
     except Exception as exc:  # noqa: BLE001 - return a clean error to the caller
         logging.exception("insights failed")
         return func.HttpResponse(
@@ -634,6 +673,180 @@ def insights(req: func.HttpRequest) -> func.HttpResponse:
             status_code=500,
             mimetype="application/json",
             headers=_cors_headers()
+        )
+
+
+# =============================================================================
+# TRIGGER 3 - data interaction. Keyword search + diet filter + pagination.
+#
+# All three happen in SQL, not in the browser. The dashboard asks for one page
+# at a time, so the response is ~25 rows regardless of whether the filter
+# matched 3 recipes or 3,000, and `total` is a COUNT the database computes
+# rather than the length of a list we shipped over the wire.
+#
+# This reads the same dbo.recipes table the pipeline loads, so it is still true
+# that cleaning and calculation happen once per file change - a search is a
+# query against already-clean data, never a recompute.
+# =============================================================================
+def _clamp_int(raw, default: int, minimum: int, maximum: int) -> int:
+    """Parse a query-string integer, falling back to the default if it is junk."""
+    try:
+        value = int(raw)
+    except (TypeError, ValueError):
+        return default
+    return max(minimum, min(value, maximum))
+
+
+def _like_pattern(term: str) -> str:
+    """
+    Turn a search term into a contains-pattern with LIKE wildcards neutralised.
+
+    Without this, searching "100%" would match every row and "[abc]" would be
+    read as a character class. The backslash is declared as the escape character
+    on the LIKE clause below.
+    """
+    escaped = (
+        term.replace("\\", "\\\\")
+        .replace("%", "\\%")
+        .replace("_", "\\_")
+        .replace("[", "\\[")
+    )
+    return f"%{escaped.lower()}%"
+
+
+def _recipe_where(q: str, diet: str) -> tuple[str, list]:
+    """Build the shared WHERE clause for the count and the page query."""
+    clauses: list[str] = []
+    params: list = []
+
+    if diet and diet != ALL_KEY:
+        clauses.append("diet_type = ?")
+        params.append(diet)
+
+    if q:
+        # search_text is the pipeline's precomputed lowercase
+        # "name + cuisine + diet" column, so one indexed LIKE covers all three.
+        clauses.append("search_text LIKE ? ESCAPE '\\'")
+        params.append(_like_pattern(q))
+
+    where = (" WHERE " + " AND ".join(clauses)) if clauses else ""
+    return where, params
+
+
+def _recipe_cache_get(key: str) -> dict | None:
+    hit = _RECIPE_CACHE.get(key)
+    if hit is None:
+        return None
+    cached_at, body = hit
+    if (time.time() - cached_at) >= _MEM_TTL_SECONDS:
+        _RECIPE_CACHE.pop(key, None)
+        return None
+    _RECIPE_CACHE.move_to_end(key)
+    return body
+
+
+def _recipe_cache_put(key: str, body: dict) -> None:
+    _RECIPE_CACHE[key] = (time.time(), body)
+    _RECIPE_CACHE.move_to_end(key)
+    while len(_RECIPE_CACHE) > _RECIPE_CACHE_MAX:
+        _RECIPE_CACHE.popitem(last=False)
+
+
+@app.route(route="recipes", methods=["GET"])
+def recipes(req: func.HttpRequest) -> func.HttpResponse:
+    """
+    One page of recipes.
+
+        GET /api/recipes?q=chicken&diet_type=keto&page=2&page_size=25&sort=protein_desc
+
+    Every parameter is optional. Unknown sort keys, out-of-range pages and
+    non-numeric input all fall back to a sane default instead of erroring, so a
+    hand-typed URL cannot 500 the endpoint.
+    """
+    start = time.perf_counter()
+
+    q = (req.params.get("q") or "").strip()[:MAX_QUERY_LENGTH]
+    diet = (req.params.get("diet_type") or ALL_KEY).strip().lower()
+    sort = (req.params.get("sort") or DEFAULT_SORT).strip().lower()
+    if sort not in _SORT_ORDERS:
+        sort = DEFAULT_SORT
+    page = _clamp_int(req.params.get("page"), default=1, minimum=1, maximum=1_000_000)
+    page_size = _clamp_int(
+        req.params.get("page_size"), default=DEFAULT_PAGE_SIZE, minimum=1, maximum=MAX_PAGE_SIZE
+    )
+
+    cache_key = f"{q}\x1f{diet}\x1f{sort}\x1f{page}\x1f{page_size}"
+
+    try:
+        body = _recipe_cache_get(cache_key)
+        served_from = "memory"
+
+        if body is None:
+            served_from = "sql"
+            where, params = _recipe_where(q, diet)
+            # id is appended as a tiebreaker: OFFSET/FETCH needs a total order,
+            # and without one, rows with equal protein could appear on two pages
+            # or on neither.
+            order_by = f"{_SORT_ORDERS[sort]}, id ASC"
+
+            conn = _sql_connect()
+            try:
+                cur = conn.cursor()
+                cur.execute(f"SELECT COUNT(*) FROM dbo.recipes{where}", *params)
+                total = int(cur.fetchone()[0])
+
+                cur.execute(
+                    f"""
+SELECT id, diet_type, recipe_name, cuisine_type, protein_g, carbs_g, fat_g
+FROM dbo.recipes{where}
+ORDER BY {order_by}
+OFFSET ? ROWS FETCH NEXT ? ROWS ONLY
+""",
+                    *params, (page - 1) * page_size, page_size,
+                )
+                rows = cur.fetchall()
+            finally:
+                conn.close()
+
+            # Key names match the insights payload ("Diet_type", "Protein(g)")
+            # so the dashboard renders these rows with the same code path.
+            items = [
+                {
+                    "id": r[0],
+                    "Diet_type": r[1],
+                    "Recipe_name": r[2],
+                    "Cuisine_type": r[3],
+                    "Protein(g)": round(r[4], 2) if r[4] is not None else None,
+                    "Carbs(g)": round(r[5], 2) if r[5] is not None else None,
+                    "Fat(g)": round(r[6], 2) if r[6] is not None else None,
+                }
+                for r in rows
+            ]
+
+            body = {
+                "items": items,
+                "total": total,
+                "page": page,
+                "page_size": page_size,
+                "total_pages": max(1, -(-total // page_size)),  # ceil division
+                "query": {"q": q, "diet_type": diet, "sort": sort},
+            }
+            _recipe_cache_put(cache_key, body)
+
+        # Copy before stamping, so the per-request metadata does not mutate the
+        # dict sitting in the cache.
+        response = dict(body)
+        response["metadata"] = {
+            "served_from": served_from,
+            "response_time_ms": round((time.perf_counter() - start) * 1000, 1),
+        }
+        return func.HttpResponse(json.dumps(response), mimetype="application/json")
+    except Exception as exc:  # noqa: BLE001 - return a clean error to the caller
+        logging.exception("recipes failed")
+        return func.HttpResponse(
+            json.dumps({"error": str(exc)}),
+            status_code=500,
+            mimetype="application/json",
         )
 
 

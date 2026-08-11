@@ -75,6 +75,26 @@
             margin-right: 6px;
             vertical-align: middle;
         }
+
+        /* Signed-in identity, top right. Hidden until auth fills it in.
+           Toggled by a class rather than a Tailwind display utility so the
+           show/hide rule is unambiguous and lives in one place. */
+        #user-box { display: none; }
+        #user-box.is-signed-in { display: flex; }
+
+        /* Pager: the gap markers between windowed page numbers are not buttons. */
+        .page-gap {
+            padding: 0.25rem 0.25rem;
+            color: #9ca3af;
+            user-select: none;
+        }
+
+        /* Dim the results table while a new page or search is in flight, so the
+           table visibly belongs to the query you just typed. */
+        .results-loading {
+            opacity: 0.45;
+            transition: opacity 120ms ease-in;
+        }
     </style>
 </head>
 <body class="bg-gray-100">
@@ -96,6 +116,24 @@
             >
                 Logout
             </button>
+    <header class="bg-blue-600 p-4 text-white">
+        <div class="container mx-auto flex items-start justify-between gap-4">
+            <div>
+                <h1 class="text-3xl font-semibold">Nutritional Insights</h1>
+                <p class="text-blue-100 text-sm">Diet dataset analysis, served by an Azure Function.</p>
+            </div>
+
+            <!-- Signed-in user slot. Empty and hidden on purpose: authentication
+                 is Person 3's piece, and this is the element it fills.
+                 Call setCurrentUser('Their Name') in app.js to reveal it, and
+                 onLogout(fn) to hook the button up to the real sign-out. -->
+            <div id="user-box" class="items-center gap-3 flex-shrink-0">
+                <span id="user-name" class="text-sm font-medium"></span>
+                <button id="logout-btn"
+                        class="bg-blue-800 hover:bg-blue-900 text-white text-sm py-1 px-3 rounded">
+                    Log out
+                </button>
+            </div>
         </div>
     </header>
 
@@ -127,6 +165,10 @@
         </section>
 
         <!-- STEP 3 - Controls: diet dropdown (from metadata) + refresh -->
+        <!-- STEP 3 - Controls: diet dropdown (from metadata) + refresh.
+             One dropdown drives both halves of the page - it re-filters the
+             charts AND the recipe explorer below, so "keto" means the same
+             thing everywhere on screen. -->
         <section class="mb-8">
             <div class="flex flex-wrap items-end gap-4">
                 <div>
@@ -134,6 +176,7 @@
                     <select id="diet-select" class="p-2 border rounded w-full sm:w-56 bg-white">
                         <option value="all">All Diet Types</option>
                     </select>
+                    <p class="text-xs text-gray-500 mt-1">Filters the charts and the recipe list.</p>
                 </div>
                 <button id="refresh-btn" class="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700">
                     Refresh
@@ -182,12 +225,68 @@
         <!-- Top protein recipes table + pagination -->
         <section class="mb-8">
             <h2 class="text-2xl font-semibold mb-4">Top Protein Recipes</h2>
+        <!-- Recipe explorer: keyword search + diet filter + server-side paging.
+             Phase 2 paged a fixed 25-row array in the browser. This table pages
+             the whole 7,806-row dataset in the database: one page comes over the
+             wire at a time and the row count is a COUNT(*), not a list length. -->
+        <section class="mb-8">
+            <div class="flex flex-wrap items-baseline justify-between gap-2 mb-4">
+                <h2 class="text-2xl font-semibold">Recipe Explorer</h2>
+                <p id="recipe-summary" class="text-sm text-gray-600">&nbsp;</p>
+            </div>
+
+            <div class="bg-white p-4 shadow-lg rounded-lg mb-4">
+                <div class="flex flex-wrap items-end gap-4">
+                    <div class="flex-1" style="min-width: 16rem;">
+                        <label for="recipe-search" class="block text-sm text-gray-600 mb-1">
+                            Search recipes
+                        </label>
+                        <input id="recipe-search" type="search" autocomplete="off"
+                               placeholder="e.g. chicken, salad, japanese"
+                               class="p-2 border rounded w-full bg-white">
+                        <p class="text-xs text-gray-500 mt-1">
+                            Matches recipe name, cuisine and diet type.
+                        </p>
+                    </div>
+
+                    <div>
+                        <label for="recipe-sort" class="block text-sm text-gray-600 mb-1">Sort by</label>
+                        <select id="recipe-sort" class="p-2 border rounded bg-white">
+                            <option value="name_asc">Recipe name (A-Z)</option>
+                            <option value="name_desc">Recipe name (Z-A)</option>
+                            <option value="protein_desc">Protein (high to low)</option>
+                            <option value="protein_asc">Protein (low to high)</option>
+                            <option value="carbs_desc">Carbs (high to low)</option>
+                            <option value="carbs_asc">Carbs (low to high)</option>
+                            <option value="fat_desc">Fat (high to low)</option>
+                            <option value="fat_asc">Fat (low to high)</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label for="recipe-page-size" class="block text-sm text-gray-600 mb-1">Per page</label>
+                        <select id="recipe-page-size" class="p-2 border rounded bg-white">
+                            <option value="10">10</option>
+                            <option value="25" selected>25</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                        </select>
+                    </div>
+
+                    <button id="recipe-reset"
+                            class="bg-gray-200 text-gray-800 py-2 px-4 rounded hover:bg-gray-300">
+                        Clear filters
+                    </button>
+                </div>
+            </div>
+
             <div class="bg-white shadow-lg rounded-lg overflow-x-auto">
                 <table class="min-w-full text-sm">
                     <thead class="bg-gray-100 text-gray-600 text-left">
                         <tr>
                             <th class="px-3 py-2">Diet</th>
                             <th class="px-3 py-2">Recipe</th>
+                            <th class="px-3 py-2">Cuisine</th>
                             <th class="px-3 py-2 text-right">Protein (g)</th>
                             <th class="px-3 py-2 text-right">Carbs (g)</th>
                             <th class="px-3 py-2 text-right">Fat (g)</th>
@@ -197,6 +296,11 @@
                 </table>
             </div>
             <div id="pagination" class="flex justify-center flex-wrap gap-2 mt-4"></div>
+
+            <!-- Windowed pager. 7,806 rows at 25 a page is 313 pages, so this
+                 renders first/last plus a window around the current page, never
+                 one button per page. -->
+            <div id="pagination" class="flex justify-center items-center flex-wrap gap-2 mt-4"></div>
         </section>
 
     </main>
@@ -206,6 +310,9 @@
     </footer>
 
     <script src="auth.js"></script>
+        <p>&copy; 2026 Nutritional Insights. Cloud Computing Phase 3.</p>
+    </footer>
+
     <script src="app.js"></script>
 </body>
 </html>
