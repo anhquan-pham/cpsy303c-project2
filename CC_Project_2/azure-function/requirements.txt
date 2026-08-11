@@ -1,0 +1,8 @@
+azure-functions
+azure-storage-blob
+azure-identity
+pyodbc
+pandas
+argon2-cffi
+PyJWT
+requests
