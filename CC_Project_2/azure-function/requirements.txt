@@ -1,3 +1,11 @@
+azure-functions
+azure-storage-blob
+azure-identity
+pyodbc
+pandas
+argon2-cffi
+PyJWT
+requests
 azure-functions>=1.21.0
 azure-storage-blob
 azure-identity>=1.17.0

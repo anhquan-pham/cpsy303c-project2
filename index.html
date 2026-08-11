@@ -99,6 +99,23 @@
 </head>
 <body class="bg-gray-100">
 
+    <header class="bg-blue-600 p-4 text-white flex justify-between items-center">
+        <div>
+            <h1 class="text-3xl font-semibold">Nutritional Insights</h1>
+            <p class="text-blue-100 text-sm">
+                Diet dataset analysis, served by an Azure Function.
+            </p>
+        </div>
+
+        <div class="flex items-center gap-4">
+            <span id="username" class="font-medium"></span>
+
+            <button
+                id="logout-btn"
+                class="bg-white text-blue-600 px-4 py-2 rounded hover:bg-gray-100"
+            >
+                Logout
+            </button>
     <header class="bg-blue-600 p-4 text-white">
         <div class="container mx-auto flex items-start justify-between gap-4">
             <div>
@@ -147,6 +164,7 @@
             </div>
         </section>
 
+        <!-- STEP 3 - Controls: diet dropdown (from metadata) + refresh -->
         <!-- STEP 3 - Controls: diet dropdown (from metadata) + refresh.
              One dropdown drives both halves of the page - it re-filters the
              charts AND the recipe explorer below, so "keto" means the same
@@ -204,6 +222,9 @@
             </div>
         </section>
 
+        <!-- Top protein recipes table + pagination -->
+        <section class="mb-8">
+            <h2 class="text-2xl font-semibold mb-4">Top Protein Recipes</h2>
         <!-- Recipe explorer: keyword search + diet filter + server-side paging.
              Phase 2 paged a fixed 25-row array in the browser. This table pages
              the whole 7,806-row dataset in the database: one page comes over the
@@ -274,6 +295,7 @@
                     <tbody id="recipe-body"></tbody>
                 </table>
             </div>
+            <div id="pagination" class="flex justify-center flex-wrap gap-2 mt-4"></div>
 
             <!-- Windowed pager. 7,806 rows at 25 a page is 313 pages, so this
                  renders first/last plus a window around the current page, never
@@ -284,6 +306,10 @@
     </main>
 
     <footer class="bg-blue-600 p-4 text-white text-center mt-10">
+        <p>&copy; 2026 Nutritional Insights. Cloud Computing Phase 2.</p>
+    </footer>
+
+    <script src="auth.js"></script>
         <p>&copy; 2026 Nutritional Insights. Cloud Computing Phase 3.</p>
     </footer>
 
