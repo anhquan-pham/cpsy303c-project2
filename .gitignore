@@ -8,3 +8,5 @@ local.settings.json
 bin/
 obj/
 .DS_Store
+
+.env

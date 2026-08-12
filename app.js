@@ -47,13 +47,9 @@
  * ---------------------------------------------------------------------------
  */
 
-// =============================================================================
-// THE ONE PLACE the endpoint lives. Person 1 is tightening CORS to the real
-// dashboard URL after deploy; Person 3 updates this single constant on deploy.
-// No other file, and nothing below, hardcodes the URL.
-// =============================================================================
-const API_BASE =
-  'https://diet-analysis-func-group9-hmhehrhjeabcd3h4.canadacentral-01.azurewebsites.net';
+// NOTE: `API_BASE` is provided by `auth.js` (loaded before this script)
+// during local development so both `login.html` and `index.html` share the
+// same backend target. Do not redeclare it here.
 
 // -----------------------------------------------------------------------------
 // Palette. Okabe-Ito colorblind-safe categorical colors, one per diet type,
@@ -124,6 +120,10 @@ async function apiFetch(path, params = {}) {
   //     if (token) headers.Authorization = `Bearer ${token}`;
   // A 401 can be turned into a redirect to the login page in the block below.
   // ---------------------------------------------------------------------------
+  try {
+    const token = sessionStorage.getItem('auth_token');
+    if (token) headers['Authorization'] = `Bearer ${token}`;
+  } catch {}
 
   const res = await fetch(url, { headers });
   if (!res.ok) {
@@ -174,11 +174,10 @@ async function pingHealth() {
 // needs to change.
 // =============================================================================
 
-// Return false to stop the dashboard rendering (and send the visitor to the
-// login page instead). Returning true here means "no auth yet, show everyone".
-function requireAuth() {
-  return true;
-}
+// The real authentication guard lives in `auth.js` and is loaded before
+// `app.js`. We intentionally do not shadow it here; auth.js provides an
+// async `requireAuth()` helper that consumes tokens from the URL, validates
+// them against the backend, and redirects to `login.html` when needed.
 
 // Reveals the header slot and puts the signed-in user's name in it.
 function setCurrentUser(name) {
@@ -673,10 +672,21 @@ function escapeHtml(s) {
 // =============================================================================
 // Wire-up
 // =============================================================================
-function init() {
-  // Person 3: return false from requireAuth() (and redirect to the login page)
-  // and nothing below runs - no charts, no data, no requests.
-  if (!requireAuth()) return;
+async function init() {
+  // Await the shared auth guard from auth.js. If it returns false it has
+  // already redirected the browser to the login page.
+  if (typeof requireAuth === 'function') {
+    const ok = await requireAuth();
+    if (!ok) return;
+  }
+
+  // Show the signed-in user's name (if available) and wire the logout
+  // button to the shared `logout()` helper in auth.js.
+  try {
+    const user = typeof getUser === 'function' ? getUser() : null;
+    if (user && user.name) setCurrentUser(user.name);
+    if (typeof onLogout === 'function' && typeof logout === 'function') onLogout(() => logout());
+  } catch {}
 
   const dietSelect = document.getElementById('diet-select');
   const search = document.getElementById('recipe-search');

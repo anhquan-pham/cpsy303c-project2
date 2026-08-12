@@ -192,8 +192,7 @@ def github_callback(req: func.HttpRequest) -> func.HttpResponse:
     # Redirect back to the dashboard with the token in the URL fragment
     # (not query string, so it isn't logged by the server) - frontend reads
     # it from window.location.hash on load, stores it, then clears the hash.
-    # dashboard_url = "https://zealous-sea-0a752020f.7.azurestaticapps.net"
-    dashboard_url = "http://localhost:5500"  # For local testing; change to the deployed URL in production
+    dashboard_url = os.environ.get("DASHBOARD_URL", "https://agreeable-glacier-0f034fb10.7.azurestaticapps.net")
     return func.HttpResponse(
         status_code=302,
         headers={"Location": f"{dashboard_url}/#token={token}"},
@@ -212,7 +211,7 @@ def me(req: func.HttpRequest) -> func.HttpResponse:
 
     return _json_response({"name": payload["name"], "email": payload["email"]})
 
-app = func.FunctionApp(http_auth_level=func.AuthLevel.ANONYMOUS)
+# app = func.FunctionApp(http_auth_level=func.AuthLevel.ANONYMOUS)
 
 MACROS = ["Protein(g)", "Carbs(g)", "Fat(g)"]
 
@@ -590,10 +589,10 @@ WHEN NOT MATCHED THEN INSERT (id, build_id, summary) VALUES (1, src.build_id, sr
     # Clear this instance's memory cache immediately. Other instances pick the
     # new build up when their entries expire (see _MEM_TTL_SECONDS).
     global _MEM_CACHE
-    _MEM_CACHE = {}
+    # _MEM_CACHE = {}
     # Clear this instance's memory caches immediately. Other instances pick the
     # new build up when their entries expire (see _MEM_TTL_SECONDS).
-    global _MEM_CACHE
+    # global _MEM_CACHE
     _MEM_CACHE = {}
     _RECIPE_CACHE.clear()
 

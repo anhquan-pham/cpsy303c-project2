@@ -10,10 +10,9 @@
  * line was removed - it now just uses this one.
  */
 
-// LOCAL TESTING: pointed at localhost:7071 (your func start). Switch this
-// back to the deployed URL before pushing/deploying for real:
-// 'https://diet-analysis-func-group9.azurewebsites.net'
-const API_BASE = 'https://diet-analysis-func-group9.azurewebsites.net';
+// Production: use the deployed Azure Function App endpoint.
+// If you need local testing again, change this back to http://localhost:7071.
+const API_BASE = 'https://diet-analysis-func-group9-hmhehrhjeabcd3h4.canadacentral-01.azurewebsites.net';
 
 const TOKEN_KEY = 'auth_token';
 const USER_KEY = 'auth_user';
@@ -56,10 +55,25 @@ function logout() {
 // Pull it out and scrub it from the URL so it doesn't linger in browser history.
 // -----------------------------------------------------------------------------
 function consumeTokenFromUrlHash() {
-  if (!window.location.hash.startsWith('#token=')) return null;
-  const token = decodeURIComponent(window.location.hash.slice('#token='.length));
-  history.replaceState(null, '', window.location.pathname + window.location.search);
-  return token;
+  // Prefer the hash form `#token=...` (current backend). Fall back to
+  // `?token=...` if the server uses a query param instead.
+  if (window.location.hash && window.location.hash.startsWith('#token=')) {
+    const token = decodeURIComponent(window.location.hash.slice('#token='.length));
+    history.replaceState(null, '', window.location.pathname + window.location.search);
+    return token;
+  }
+
+  const params = new URLSearchParams(window.location.search);
+  if (params.has('token')) {
+    const token = params.get('token');
+    params.delete('token');
+    const newSearch = params.toString();
+    const newUrl = window.location.pathname + (newSearch ? `?${newSearch}` : '');
+    history.replaceState(null, '', newUrl + window.location.hash);
+    return token;
+  }
+
+  return null;
 }
 
 // Ask the backend who this token actually belongs to. This also acts as a
